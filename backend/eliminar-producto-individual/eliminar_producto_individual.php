@@ -4,8 +4,13 @@
     $base = Conectar::conexion();
 
     $id = $_GET["ID"];
+    $proovedor = $_GET["prov"];
+    $nombre = $_GET["nom"];
 
-    $base->query("DELETE FROM producto_individual_cocacola WHERE ID='$id'");
-    header("Location:../../WEB/productos/coca-cola.php");
+    $tabla= 'producto_individual_' . $nombre;
+
+    $base->query("DELETE FROM $tabla WHERE ID='$id'");
+    header("Location:'../../../../WEB/productos/" . $nombre . ".php");
+
 
 ?>

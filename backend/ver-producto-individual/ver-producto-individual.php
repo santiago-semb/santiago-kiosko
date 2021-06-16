@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coca Cola | Kiosko</title>
-    <link rel="stylesheet" href="../../../WEB/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
 
     <style>
 
@@ -37,22 +37,25 @@
 
     <nav class="menu">
         <ul>
-            <li><a href="../../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
-            <li><a href="../../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="../../../WEB/compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="../../../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
+            <li><a href="../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
+            <li><a href="../../WEB/compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
 
     <?php 
 
-        require("../../../backend/conexion/conexion.php");
+        require("../../backend/conexion/conexion.php");
         $base = Conectar::conexion();
 
         $id = $_GET["ID"];
+        $nombre = $_GET["nom"];
 
-        $query = "SELECT * FROM producto_individual_cocacola WHERE ID=$id";
+        $tabla= 'producto_individual_' . $nombre;
+
+        $query = "SELECT * FROM $tabla WHERE ID=$id";
         $resultado = $base->prepare($query);
         $resultado->execute();
         $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ);
@@ -63,7 +66,7 @@
         foreach($sentencia as $datos) : ?>
         <table>
             <tr>
-                <td><img src='../../../WEB/productos/image-individual/<?php echo $datos->IMAGEN ?>'></td>
+                <td><img src='../../WEB/productos/image-individual/<?php echo $datos->IMAGEN ?>'></td>
             </tr>
             <tr>
                 <td><b>nombre:</b> <?php echo $datos->NOMBRE ?> </td>
@@ -92,4 +95,3 @@
 
 </body>
 </html>
-

@@ -66,9 +66,9 @@
         $litros=$_POST["litros"];
         $lineaProducto=$_POST["linea_producto"];
 
-   
+        $tabla= 'producto_individual_' . $nombre;
 
-    $sql="UPDATE producto_individual_cocacola SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, IMAGEN=:img, PROOVEDOR=:proovedor, LITROS=:litros, LINEAproducto=:lineaproducto WHERE ID=:id";
+    $sql="UPDATE $tabla SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, IMAGEN=:img, PROOVEDOR=:proovedor, LITROS=:litros, LINEAproducto=:lineaproducto WHERE ID=:id";
         $resultado=$base->prepare($sql);
         $resultado->bindParam(":id", $id);
         $resultado->bindParam(":nombre", $nombre);
@@ -80,7 +80,7 @@
         $resultado->bindParam(":lineaproducto", $lineaProducto);
         
         $resultado->execute();
-        header("Location:../../WEB/productos/coca-cola.php");
+        header("Location:'../../../../WEB/productos/" . $nombre . ".php");
 
     }
 
@@ -96,7 +96,9 @@
 
         <tr>
             <td>Nombre del producto<label for="campo_titulo"></label></td>            
-            <td><input type="text" name="nombre_producto" value="<?php echo $nombre ?>"></td>         
+            <td><select name="nombre_producto">
+                <option>cocacola</option>
+            </select></td>         
         </tr>
 
         <tr>

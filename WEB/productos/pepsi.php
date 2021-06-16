@@ -16,6 +16,21 @@
 
 </head>
 <body>
+
+<?php 
+    
+    require("../../backend/conexion/conexion.php");
+    $base = Conectar::conexion();
+
+    //ordenando todos los blogs (el mas reciente primero)
+    $query = "SELECT * FROM producto_individual_pepsi ORDER BY ID DESC";
+    $resultado = $base->prepare($query);
+    $resultado->execute();
+    $res = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
+
     <header class="header">
         <h1>KIOSKITO</h1>
     </header>
@@ -30,25 +45,23 @@
     </nav>
 
     <div id="h1-productos">
-        <a href="../../backend/insertar-producto-individual/pepsi/formulario-producto-individual.php" style="list-style: none;"><button>Añadir producto</button></a>
+        <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=pepsi" style="list-style: none;"><button>Añadir producto</button></a>
     </div>
 
-    <div class="productos-all">
 
+<?php 
 
-    <?php 
-    
-    require("../../backend/conexion/conexion.php");
-    $base = Conectar::conexion();
 
     //ordenando todos los blogs (el mas reciente primero)
     $query = "SELECT * FROM producto_individual_pepsi ORDER BY ID DESC";
     $resultado = $base->prepare($query);
     $resultado->execute();
-    $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ)
+    $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ);
 
-    ?>
+?>
 
+
+    <div class="productos-all">
 
     <?php
         foreach($sentencia as $datos) : ?>
@@ -61,7 +74,7 @@
             <div class='div-boton-producto-ind'>
             
             <!-- boton ver -->
-            <a href='../../backend/ver-producto-individual/pepsi/ver-producto-individual.php?ID=<?php echo $datos->ID ?>'>   
+            <a href='../../backend/ver-producto-individual/ver-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE ?>'>   
             <input type='button' value='vista'>
             </a>
             <!-- boton editar -->
@@ -69,7 +82,7 @@
             <input type='button' value='editar'>
             </a>
             <!-- boton eliminar -->
-            <a href='../../backend/eliminar-producto-individual/eliminar_producto_individual.php?ID=<?php echo $datos->ID ?>'>      
+            <a href='../../backend/eliminar-producto-individual/eliminar_producto_individual.php?ID=<?php echo $datos->ID ?> & prov=<?php echo $datos->PROOVEDOR ?> & nom=<?php echo $datos->NOMBRE ?>'>      
             <input type='button' value='eliminar'>
             </a>
         

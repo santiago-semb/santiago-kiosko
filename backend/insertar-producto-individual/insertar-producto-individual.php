@@ -1,6 +1,6 @@
 <?php 
 
-    require("../../../backend/conexion/conexion.php");
+    require("../../backend/conexion/conexion.php");
     $base = Conectar::conexion();
 
     if($_FILES["imagen"]["error"]){
@@ -51,11 +51,13 @@
     $proovedor = $_POST["proovedor"];
     $litros = $_POST["litros"];
     $linea_producto = $_POST["linea_producto"];
+
+    $tabla= 'producto_individual_' . $nombre;
     
 
-    $query = "INSERT INTO producto_individual_pepsi (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, LINEAproducto) VALUES ('" . $nombre . "','" . $precio_compra . "','" . $precio_venta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "','" . $linea_producto . "')";
+    $query = "INSERT INTO $tabla (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, LINEAproducto) VALUES ('" . $nombre . "','" . $precio_compra . "','" . $precio_venta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "','" . $linea_producto . "')";
     $resultado = $base->prepare($query);
     $resultado->execute();
 
-    header("Location:../../../WEB/productos/pepsi.php");
+    header("Location:../../WEB/productos/" . $nombre . ".php");
 ?>

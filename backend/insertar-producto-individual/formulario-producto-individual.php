@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
-    <link rel="stylesheet" href="../../../WEB/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
     <style>
 
         table {
@@ -29,22 +29,41 @@
 
     <nav class="menu">
         <ul>
-            <li><a href="../../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
-            <li><a href="../../../productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="../../../compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="../../../ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
+            <li><a href="../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
+            <li><a href="../../WEB/compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
     <h1 style="text-align: center;">AÑADIR PRODUCTO</h1>
 
 
-    <form action="../../../backend/insertar-producto-individual/pepsi/insertar-producto-individual.php" method="post" enctype="multipart/form-data" name="form1">
+    <?php 
+    
+    require("../../backend/conexion/conexion.php");
+        $base = Conectar::conexion();
+
+        $nombre = $_GET["nom"];
+
+        $tabla= 'producto_individual_' . $nombre;
+
+        $query = "SELECT * FROM $tabla";
+        $resultado = $base->prepare($query);
+        $resultado->execute();
+        $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ);
+    
+    ?>
+
+
+    <form action="../../backend/insertar-producto-individual/insertar-producto-individual.php" method="post" enctype="multipart/form-data" name="form1">
     <table>
 
         <tr>
             <td>Nombre del producto<label for="campo_titulo"></label></td>            
-            <td><input type="text" name="nombre_producto"></td>         
+            <td><select name="nombre_producto">
+                <option><?php echo $nombre ?></option>
+            </select></td>         
         </tr>
 
         <tr>
@@ -88,6 +107,7 @@
 
     </table>
     </form>
+
     
 </body>
 </html>

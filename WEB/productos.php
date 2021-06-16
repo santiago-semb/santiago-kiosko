@@ -75,21 +75,10 @@ $base = Conectar::conexion();
 
             echo "<div class='cuadro-individual-productos'>"; 
 
-            if($registro['NOMBRE']=='coca-cola'){
-                echo "<a href='../WEB/productos/coca-cola.php' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
-            }
-
-            elseif($registro['NOMBRE']=='pepsi'){
-                echo "<a href='../WEB/productos/pepsi.php' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
-            } 
-            
-            else {
-                echo "<a href='#' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
-            }
-
-           
+            echo "<a href='../WEB/productos/" . $registro['NOMBRE'] . ".php' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
 
             echo "</div>";
+ 
 
         }
 
