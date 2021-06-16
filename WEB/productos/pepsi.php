@@ -43,7 +43,7 @@
             <li><a href="../ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
-
+    
     <div id="h1-productos">
         <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=pepsi" style="list-style: none;"><button>Añadir producto</button></a>
     </div>
