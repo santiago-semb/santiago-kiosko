@@ -144,10 +144,10 @@ body {
     width: 30%;
 }
 
-#imagen-productos {
+/*#imagen-productos {
     width: 200px;
     height: 200px;
-    border-radius: 0.5em;
+    /*border-radius: 0.5em;
     transition: 150ms all;
 }
 
@@ -156,8 +156,9 @@ body {
 }
 
 img:hover {
-    font-size: 75px;
-}
+    /*font-size: 75px;
+    
+}*/
 
 button {
     outline: none;

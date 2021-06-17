@@ -51,45 +51,54 @@ $base = Conectar::conexion();
         <button class="search-button" type="submit" name="busqueda"><i class="fas fa-search"></i></button>
         </form>
 
-        <form method="post" action="../backend/eliminar-producto(general)/eliminar-producto-general.php">
-        <input type="text" placeholder=" Eliminar producto..." class="input-buscador" name="nombre_producto">
-        <button class="delete-button" type="submit"><i class="fas fa-trash-alt" style="font-size:17px;"></i></button>
-        </form>
         <b>NOTA: para eliminar un producto hay que poner el nombre tal cual esta escrito en el campo "NOMBRE" en la BBDD.</b>
         </div>
     </div>
 
-    <div class="productos-all">
+<?php
+
+        $sql = "SELECT * FROM productoslogo";
+        $resultado = $base->prepare($sql);
+        $resultado->execute();
+
+?>
 
 
-    <?php 
-    
+        <div>
+            <h1>SU BUSQUEDA</h1>
 
-    //ordenando todos los blogs (el mas reciente primero)
-    $query = "SELECT * FROM productoslogo ORDER BY FECHA";
-    $resultado = $base->prepare($query);
-    $resultado->execute();
+            <?php
 
- 
-    while($registro = $resultado->fetch(PDO::FETCH_ASSOC)){
-        
-        if($registro['IMAGEN']!=""){
+            if(isset($_GET['busqueda'])) {
+                $buscar=$_GET['buscar'];
+            
+                $sql="SELECT * FROM productoslogo WHERE NOMBRE LIKE '%$buscar%'";
+                $stmt=$base->prepare($sql);
+                $stmt->execute();
 
-            echo "<div class='cuadro-individual-productos'>"; 
+                while($registro=$stmt->fetch(PDO::FETCH_ASSOC)){
 
-            echo "<a href='../WEB/productos/" . $registro['NOMBRE'] . ".php' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
 
-            echo "</div>";
- 
+                    if($registro['IMAGEN']!=""){
 
-        }
+                        echo "<div class='cuadro-individual-productos'>"; 
+            
+                        echo "<a href='../WEB/productos/" . $registro['NOMBRE'] . ".php' class='cuadro-producto'><img id='imagen-productos' src='../WEB/assets/logos/" . $registro['IMAGEN'] . "'/></a>";
+            
+                        echo "</div>";
+             
+            
+                    }
+                    
+               
+                }
+                
+            } 
+                
+            ?>
+            
 
-    }
-
-    ?>
-
-</div>
-
+        </div>
     
 
    

@@ -97,7 +97,7 @@
         <tr>
             <td>Nombre del producto<label for="campo_titulo"></label></td>            
             <td><select name="nombre_producto">
-                <option>cocacola</option>
+                <option><?php echo $nombre ?></option>
             </select></td>         
         </tr>
 
