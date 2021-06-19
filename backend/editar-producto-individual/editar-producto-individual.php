@@ -117,7 +117,7 @@
         <tr>
             <td><label for="imagen"></label></td>
             <td><input type="file" name="imagen" id="imagen"></td>
-        </tr>
+        </tr>-
         
         <tr>
             <td>Proovedor<label for="proovedor"></label></td>
