@@ -100,7 +100,6 @@ body {
     color: white;
     width: 100%;
     text-align: center;
-    border-bottom: 2px solid gray;
     height: 50px;
     line-height: 50px;
 }
@@ -144,10 +143,10 @@ body {
     width: 30%;
 }
 
-/*#imagen-productos {
+#imagen-productos {
     width: 200px;
     height: 200px;
-    /*border-radius: 0.5em;
+    border-radius: 0.5em;
     transition: 150ms all;
 }
 
@@ -156,9 +155,9 @@ body {
 }
 
 img:hover {
-    /*font-size: 75px;
+    font-size: 100px;
     
-}*/
+}
 
 button {
     outline: none;

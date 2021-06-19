@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://www.cocacoladeargentina.com.ar/content/dam/journey/gl/gl/icons/coke-favicon.png">
     <title>Coca Cola | Kiosko</title>
     <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
 
@@ -12,12 +13,19 @@
             list-style: none;
             text-decoration: none;
         }
+
+        .imagen-logo-fondo {
+            float: left;
+            width: 50px;
+            height: 50px;
+        }
+
     </style>
 
 </head>
 <body>
     <header class="header">
-        <h1>KIOSKITO</h1>
+        <h1>KIOSKITO</h1>       
     </header>
 
     <nav class="menu">
@@ -42,7 +50,7 @@
     $base = Conectar::conexion();
 
     //ordenando todos los blogs (el mas reciente primero)
-    $query = "SELECT * FROM producto_individual_cocacola ORDER BY ID DESC";
+    $query = "SELECT * FROM producto_individual_cocacola ORDER BY LITROS DESC";
     $resultado = $base->prepare($query);
     $resultado->execute();
     $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ)
