@@ -8,16 +8,19 @@
     <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
     <style>
 
-        table {
+table {
             margin: auto;
             width: 50%;
-            border: 2px solid black;
-            padding: 3px;
-            background-color: blanchedalmond;
+            border: 2px solid white;
+            border-radius: 0.5em;
+            padding: 10px;
+            background-color: gray;
+            color: white;
         }
         
         td{
             padding:5px 0px;
+            
         }
 
     </style>

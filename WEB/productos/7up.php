@@ -25,7 +25,7 @@
         <ul>
             <li><a href="../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="../../WEB/compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../../WEB/compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
             <li><a href="../../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
@@ -57,13 +57,18 @@
   
         <div style='display: inline-block; height: 300px;'>
             <!-- imagen con el producto individual -->
-            <a class='cuadro-producto'><img id='imagen-productos' src='image-individual/<?php echo $datos->IMAGEN ?>'></a>
+            <a href='../../backend/ver-producto-individual/ver-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE ?>' class='cuadro-producto'><img id='imagen-productos' src='image-individual/<?php echo $datos->IMAGEN ?>'></a>
             <!-- botones de editar, eliminar, ver -->
             <div class='div-boton-producto-ind'>
             
-            <!-- boton ver -->
-            <a href='../../backend/ver-producto-individual/ver-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE ?>'>   
-            <input type='button' value='vista'>
+            <script>
+function hizoClick() {
+      alert("Añadido a compras.");
+}
+</script>
+            <!-- boton añadir -->   
+            <a href='../../WEB/insertar_compra.php?ID<?php echo $datos->ID ?> & nombre=<?php echo $datos->NOMBRE ?>& litros=<?php echo $datos->LITROS ?>& total=<?php echo $datos->PRECIOventa ?>'>      
+            <input type='button' value='Añadir' onclick="hizoClick()">
             </a>
             <!-- boton editar -->
             <a href='../../backend/editar-producto-individual/editar-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE?> & pcompra=<?php echo $datos->PRECIOcompra?> & pventa=<?php echo $datos->PRECIOventa?> & img=<?php echo $datos->IMAGEN?> & prov=<?php echo $datos->PROOVEDOR?> & litros=<?php echo $datos->LITROS?> & lineap=<?php echo $datos->LINEAproducto?>"'>   
@@ -73,6 +78,7 @@
             <a href='../../backend/eliminar-producto-individual/eliminar_producto_individual.php?ID=<?php echo $datos->ID ?> & prov=<?php echo $datos->PROOVEDOR ?> & nom=<?php echo $datos->NOMBRE ?>'>      
             <input type='button' value='eliminar'>
             </a>
+
         
             </div>
 

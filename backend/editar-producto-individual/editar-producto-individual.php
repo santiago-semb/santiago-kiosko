@@ -17,14 +17,32 @@
         table {
             margin: auto;
             width: 50%;
-            border: 2px solid black;
-            padding: 3px;
-            background-color: white;
+            border: 2px solid white;
+            border-radius: 0.5em;
+            padding: 10px;
+            background-color: gray;
+            color: white;
         }
         
         td{
-            padding:5px 0px;
+            padding:5px 0px;           
         }
+
+        .tr-img {
+            color: black;
+        }
+
+        .tr-img b {
+            color: white;
+        }
+
+        .h1-inicio {
+            padding: 20px;
+            text-align: center;
+            font-size: 25px;
+            
+        }
+
 
     </style>
     </header>
@@ -61,20 +79,18 @@
         $nombre=$_POST["nombre_producto"];
         $precioCompra=$_POST["precio_compra"];
         $precioVenta=$_POST["precio_venta"];
-        $imagen=$_POST["imagen"];
         $proovedor=$_POST["proovedor"];
         $litros=$_POST["litros"];
         $lineaProducto=$_POST["linea_producto"];
 
         $tabla= 'producto_individual_' . $nombre;
 
-    $sql="UPDATE $tabla SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, IMAGEN=:img, PROOVEDOR=:proovedor, LITROS=:litros, LINEAproducto=:lineaproducto WHERE ID=:id";
+    $sql="UPDATE $tabla SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, PROOVEDOR=:proovedor, LITROS=:litros, LINEAproducto=:lineaproducto WHERE ID=:id";
         $resultado=$base->prepare($sql);
         $resultado->bindParam(":id", $id);
         $resultado->bindParam(":nombre", $nombre);
         $resultado->bindParam(":pcompra", $precioCompra);
         $resultado->bindParam(":pventa", $precioVenta);
-        $resultado->bindParam(":img", $imagen);
         $resultado->bindParam(":proovedor", $proovedor);
         $resultado->bindParam(":litros", $litros);
         $resultado->bindParam(":lineaproducto", $lineaProducto);
@@ -86,7 +102,7 @@
 
 ?>
 
-<h2>EDITAR PRODUCTO</h2>
+<h1 class="h1-inicio">EDITAR PRODUCTO</h1>
 
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
     <table>
@@ -111,13 +127,10 @@
             <td><input type="number" name="precio_venta" value="<?php echo round($precioVenta); ?>">
         </tr>
        
-        <tr>
-            <td colspan="2" align="center">Seleccione una imagen con tamaño inferior a 2 MB</td>
-        </tr>    
-        <tr>
-            <td><label for="imagen"></label></td>
-            <td><input type="file" name="imagen" id="imagen"></td>
-        </tr>-
+        <tr class="tr-img">
+            <td colspan="2" align="center"><b>IMAGEN ACTUAL </b>
+            <?php echo "* " . $imagen . "*"?></td>
+        </tr>
         
         <tr>
             <td>Proovedor<label for="proovedor"></label></td>

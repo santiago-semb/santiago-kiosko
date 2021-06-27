@@ -11,6 +11,10 @@
 
     <style>
 
+        h1, div {
+            text-align: center;
+        }
+
         .delete-button {
             border: 3px solid red;
             background-color: red;
@@ -65,7 +69,7 @@ $base = Conectar::conexion();
 
 
         <div>
-            <h1>SU BUSQUEDA</h1>
+            <h1>Su busqueda:</h1>
 
             <?php
 

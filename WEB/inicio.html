@@ -11,22 +11,26 @@
         table {
             margin: auto;
             width: 50%;
-            border: 2px solid black;
-            padding: 3px;
-            background-color: blanchedalmond;
+            border: 2px solid white;
+            border-radius: 0.5em;
+            padding: 10px;
+            background-color: gray;
+            color: white;
         }
         
         td{
             padding:5px 0px;
+            
         }
 
         .h1-inicio {
+            padding: 20px;
             text-align: center;
-            background-color: rgb(179, 142, 190);
             font-size: 25px;
-            color: rgb(37, 34, 34);
+            
         }
 
+    
 
     </style>
 </head>
@@ -39,7 +43,7 @@
         <ul>
             <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
             <li><a href="ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
@@ -47,19 +51,14 @@
     <h1 class="h1-inicio">AÑADIR PRODUCTOS</h1>
 
 
-    <form action="../backend/crear-productos/crear_contenido.php" method="post" enctype="multipart/form-data" name="form1">
-    <table>
+    <form action="../backend/crear-productos/crear_contenido.php" method="post" enctype="multipart/form-data" name="form1" class="formulario-inicio">
+    <table class="tabla-inicio">
 
         <tr>
             <td>Nombre del producto<label for="campo_titulo"></label></td>            
             <td><input type="text" name="nombre_producto" id="nombre_producto"></td>         
         </tr>
 
-        <tr>
-            <td></td>
-        </tr>
-
-        
         <tr>
             <td colspan="2" align="center">Seleccione una imagen con tamaño inferior a 2 MB</td>
         </tr>       
@@ -76,6 +75,5 @@
     </table>
     </form>
 
-    
 </body>
 </html>
