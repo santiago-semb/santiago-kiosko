@@ -14,14 +14,15 @@
             color: #444;
         }
 
-
         #container {
             width: 700px;
             margin: auto;
             background-color: #eee;
             overflow: hidden;
+            min-height: 500px;
             /* Set overflow: hidden to clear the floats on #main and #sidebar */
             padding: 15px;
+            margin-bottom: 35px;
         }
 
         #main {
@@ -32,6 +33,7 @@
         #sidebar {
             width: 200px;
             float: left;
+            min-height: 500px;
         }
 
         .h1-inicio {
@@ -54,6 +56,20 @@
         #td-button {
             border: none;
         }
+
+        .a-eliminar-todo {
+            float: right;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            background-color: rgb(56, 26, 126);
+            width: 100%;
+            text-align: center;
+            color: whitesmoke;
+        }
+
     </style>
 </head>
 
@@ -67,7 +83,7 @@
             <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
             <li><a href="compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
@@ -80,6 +96,19 @@
             $sql = "SELECT * FROM compras";
             $resultado = $base->prepare($sql);
             $resultado->execute();
+            $row = $resultado->fetch(PDO::FETCH_ASSOC);
+            $name = $row["NOMBRE"];
+            $fecha = $row["FECHA"];
+            $total = $row["TOTAL"];
+            
+                
+            
+    ?>
+
+<?php 
+        $sql = "SELECT NOMBRE, TOTAL FROM compras";
+        $r = $base->prepare($sql);
+        $r->execute();
     ?>
 
     <div id="container">
@@ -87,39 +116,71 @@
         <div id="main">
 
         <h1>LISTA PRODUCTOS</h1>
-    
+
         <table>
                 <tr>
                     <th>FECHA | HORA</th>
                     <th>DESCRIPCION</th>
                     <th>IMPUESTOS</th>
                     <th>TOTAL</th>
-                </tr>
-                
-                    <?php while($row = $resultado->fetch(PDO::FETCH_OBJ)) : ?>
+                </tr>      
+                    <?php 
+                        $sql = "SELECT * FROM compras";
+                        $resultad = $base->prepare($sql);
+                        $resultad->execute();
+                    ?>         
+                    <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
                         <td><?php echo $row->FECHA ?></td>
-                        <td><?php echo $row->NOMBRE ?></td>
+                        <td><?php echo $row->NOMBRE ?></td>                       
                         <td>$ 0</td>
-                        <td>$ <?php echo $row->TOTAL ?></td>
-                        
-                        <td id="td-button"><a href="eliminar_compra.php?ID=<?php echo $row->ID ?>"><button name="bot-delete">Eliminar</button></a></td>
+                        <td>$ <?php $total = $row->TOTAL; echo $total ?></td>     
+                                   
+                        <td id="td-button"><a href="../WEB/compras/eliminar_compra.php?ID=<?php echo $row->ID ?>"><button name="bot-delete">Eliminar</button></a></td>
+                
                 </tr>
-                    <?php endwhile; ?> 
-                                       
+                    <?php endwhile; ?>      
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <?php 
+                                $query = "SELECT SUM(TOTAL) as preciototal FROM COMPRAS";
+                                $resultado = $base->prepare($query);
+                                $resultado->execute();
+                                $totales = $resultado->fetch(PDO::FETCH_OBJ);
+                                $totaltotal = $totales->preciototal;
+                                echo "<td><b>$ " . $totaltotal . "</b></td>";
+                    ?>
 
+                    <?php 
+                                /*$query = "SELECT NOMBRE as nombres FROM COMPRAS";
+                                $resultado = $base->prepare($query);
+                                $resultado->execute();
+                                while($consulta = $resultado->fetch(PDO::FETCH_OBJ)){
+                                $arrayNombres = $consulta->nombres;                            
+                                echo "<p>" . $arrayNombres . "</p>";
+                                }*/
+                    ?>
+                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
+                    & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
+                        echo "<p>" . $nombres->NOMBRE . "</p>";
+                    } ?>"><button name="bot-delete">calculadora</button></a></td>
+                </tr>  
+                        
         </table>
          
         </div>
 
         <div id="sidebar">
-
+        <!-- boton eliminar todo -->
+            <a href="../WEB/compras/eliminar_todas_las_compras.php" class="a-eliminar-todo"><button>Eliminar todo</button></a>
         </div>
 
     </div>
     <!--end container-->
 
-
+    <footer>Las compras estan configuradas para enviar datos a la BBDD</footer>
 
 </body>
 

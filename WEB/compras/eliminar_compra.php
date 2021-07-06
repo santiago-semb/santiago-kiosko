@@ -1,6 +1,6 @@
 <?php
 
-    require("../backend/conexion/conexion.php");
+    require("../../backend/conexion/conexion.php");
     $base = Conectar::conexion();
 
     $id = $_GET["ID"];
@@ -9,6 +9,6 @@
     $resultado = $base->prepare($sql);
     $resultado->execute();
 
-    header("Location:compras.php");
+    header("Location:../compras.php");
 
 ?>

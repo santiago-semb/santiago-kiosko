@@ -40,6 +40,46 @@
         .vuelto:hover {
             border: 3px solid gray;
         }
+
+        #div-button-confirmar-compra {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        #boton-confirmar-compra {
+            width: 18%;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+            border: 2px solid white;
+            border-radius: 0.2em;
+            text-transform: uppercase;
+            transition: 100ms all;
+        }
+
+        #boton-confirmar-compra:hover {
+            background-color: green;
+            color: white;
+            border: 2px solid green;
+        }
+
+        #boton-eliminar-compra {
+            font-size: 16px;
+            width: 18%;
+            background-color: white;
+            color: black;
+            border: 2px solid white;
+            border-radius: 0.2em;
+            text-transform: uppercase;
+            transition: 100ms all;
+        }
+
+        #boton-eliminar-compra:hover {
+            background-color: red;
+            color: white;
+            border: 2px solid red;
+        }
+
     </style>
 </head>
 <body>
@@ -51,7 +91,7 @@
         <ul>
             <li><a href="../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="../WEB/compras.html" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../WEB/compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
             <li><a href="../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
@@ -67,21 +107,28 @@ if(isset($_POST["boton-enviar"])) {
     $precioVenta = $_POST["total"];
     $vuelto = $pagaCon - $precioVenta;
 
+    $nombre= $_GET["nom"];
+    $fecha=$_GET["fecha"];
+    
 }else{
+    $nombre= $_GET["nom"];
+    $fecha=$_GET["fecha"];
 
     $precioVenta = $_GET["precio"];
     $vuelto=0;
     
 }
 
-if($vuelto==-1){
+if($vuelto<=-1){
     $vuelto = "Error.";
 }
+
+$nombresproductos = $_GET["anom"];
 
 ?>
 
 
-    <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" name="form1" class="formulario-inicio">
+    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"];?>" method="post" name="form1" class="formulario-inicio">
     <div>
         <label for="total">Total:</label>
         <input type="text" name="total" value="<?php echo $precioVenta ?>" readonly="readonly" class="total">
@@ -99,9 +146,16 @@ if($vuelto==-1){
         <input type="text" name="vuelto" value="<?php echo $vuelto ?>" readonly="readonly" class="vuelto">
     </div>
     <div class="boton-calculadora">
-        <a href=""><input type="submit" value="Vender" name="boton-enviar"></a>
+        <a href=""><button name="boton-enviar">Vender</button></a>
     </div>
     </form>
-    
+
+    <div id="div-button-confirmar-compra">
+        <a href="../WEB/ventas/insertar_ventas.php?precio=<?php echo $precioVenta ?> & nom=<?php  echo $nombresproductos ?>"><button id="boton-confirmar-compra" name="boton-compra">confirmar compra</button></a>
+    </div>
+
+    <div id="div-button-confirmar-compra">
+        <a href="../WEB/compras/eliminar_todas_las_compras.php"><button id="boton-eliminar-compra">eliminar compra</button></a>
+    </div>
 </body>
 </html>

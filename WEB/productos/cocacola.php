@@ -33,7 +33,7 @@
             <li><a href="../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
             <li><a href="../../WEB/compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="../../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../../WEB/ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
@@ -68,13 +68,14 @@
             <!-- botones de editar, eliminar, ver -->
             <div class='div-boton-producto-ind'>
             
-            <script>
-function hizoClick() {
-      alert("Añadido a compras."); 
-}
+<script>
+    function hizoClick() {
+        alert("Añadido a compras."); 
+        }
 </script>
+
             <!-- boton añadir -->   
-            <a href='../../WEB/insertar_compra.php?ID<?php echo $datos->ID ?> & nombre=<?php echo $datos->NOMBRE ?>& litros=<?php echo $datos->LITROS ?>& total=<?php echo $datos->PRECIOventa ?>'>      
+            <a href='../../WEB/compras/insertar_compra.php?ID<?php echo $datos->ID ?> & nombre=<?php echo $datos->NOMBRE ?>& litros=<?php echo $datos->LITROS ?>& total=<?php echo $datos->PRECIOventa ?>'>      
             <input type='button' value='Añadir' onclick="hizoClick()">
             </a>
             <!-- boton editar -->

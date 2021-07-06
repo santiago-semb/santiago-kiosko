@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/logo-inferior/andes.jpg">
-    <title>Andes | Kiosko</title>
+    <link rel="shortcut icon" href="../assets/logo-inferior/empanadas.jpg">
+    <title>Empanadas | Kiosko</title>
     <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
 
     <style>
@@ -31,7 +31,7 @@
     </nav>
 
     <div id="h1-productos">
-        <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=andes" style="list-style: none;"><button>Añadir producto</button></a>
+        <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=empanadas" style="list-style: none;"><button>Añadir producto</button></a>
     </div>
 
     <div class="productos-all">
@@ -43,7 +43,7 @@
     $base = Conectar::conexion();
 
     //ordenando todos los blogs (el mas reciente primero)
-    $query = "SELECT * FROM producto_individual_andes ORDER BY LITROS DESC";
+    $query = "SELECT * FROM producto_individual_empanadas ORDER BY LITROS DESC";
     $resultado = $base->prepare($query);
     $resultado->execute();
     $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ)
@@ -52,6 +52,7 @@
 
 
     <?php
+    
         foreach($sentencia as $datos) : ?>
 
   
@@ -60,7 +61,6 @@
             <a href='../../backend/ver-producto-individual/ver-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE ?>' class='cuadro-producto'><img id='imagen-productos' src='image-individual/<?php echo $datos->IMAGEN ?>'></a>
             <!-- botones de editar, eliminar, ver -->
             <div class='div-boton-producto-ind'>
-            
             <script>
 function hizoClick() {
       alert("Añadido a compras."); 
