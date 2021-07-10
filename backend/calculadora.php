@@ -128,7 +128,7 @@ $nombresproductos = $_GET["anom"];
 ?>
 
 
-    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"];?>" method="post" name="form1" class="formulario-inicio">
+    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"] . '&anom=' . $_GET["anom"];?>" method="post" name="form1" class="formulario-inicio">
     <div>
         <label for="total">Total:</label>
         <input type="text" name="total" value="<?php echo $precioVenta ?>" readonly="readonly" class="total">
