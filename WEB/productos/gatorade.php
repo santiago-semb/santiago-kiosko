@@ -67,7 +67,10 @@ function hizoClick() {
 }
 </script>
             <!-- boton añadir -->   
-            <a href='../../WEB/compras/insertar_compra.php?ID<?php echo $datos->ID ?> & nombre=<?php echo $datos->NOMBRE ?>& litros=<?php echo $datos->LITROS ?>& total=<?php echo $datos->PRECIOventa ?>'>      
+            <a href='../../WEB/compras/insertar_compra.php?ID<?php echo $datos->ID ?> 
+            & nom=<?php $nombre = $datos->NOMBRE; $n = $nombre; echo $n?>
+            & nproducto=<?php $nomImg = $datos->IMAGEN; $nombre_producto = substr($nomImg, 0, -4); echo $nombre_producto ?>
+            & total=<?php echo $datos->PRECIOventa ?>'>      
             <input type='button' value='Añadir' onclick="hizoClick()">
             </a>
             <!-- boton editar -->

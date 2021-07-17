@@ -105,11 +105,7 @@
             
     ?>
 
-<?php 
-        $sql = "SELECT NOMBRE, TOTAL FROM compras";
-        $r = $base->prepare($sql);
-        $r->execute();
-    ?>
+
 
     <div id="container">
 
@@ -132,7 +128,7 @@
                     <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
                         <td><?php echo $row->FECHA ?></td>
-                        <td><?php echo $row->NOMBRE ?></td>                       
+                        <td><b><?php $name = $row->NOMBRE; echo strtoupper($name); ?></b></td>                       
                         <td>$ 0</td>
                         <td>$ <?php $total = $row->TOTAL; echo $total ?></td>     
                                    
@@ -153,7 +149,7 @@
                                 echo "<td><b>$ " . $totaltotal . "</b></td>";
                     ?>
 
-                    <?php 
+                <?php 
                                 /*$query = "SELECT NOMBRE as nombres FROM COMPRAS";
                                 $resultado = $base->prepare($query);
                                 $resultado->execute();
@@ -161,7 +157,14 @@
                                 $arrayNombres = $consulta->nombres;                            
                                 echo "<p>" . $arrayNombres . "</p>";
                                 }*/
+                ?>
+                
+                    <?php 
+                        $sql = "SELECT NOMBRE, TOTAL FROM compras";
+                        $r = $base->prepare($sql);
+                        $r->execute();
                     ?>
+
                     <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
                     & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
                         echo "<p>" . $nombres->NOMBRE . "</p>";

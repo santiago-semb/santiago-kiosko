@@ -75,13 +75,18 @@
 </script>
 
             <!-- boton añadir -->   
-            <a href='../../WEB/compras/insertar_compra.php?ID<?php echo $datos->ID ?> & nombre=<?php echo $datos->NOMBRE ?>& litros=<?php echo $datos->LITROS ?>& total=<?php echo $datos->PRECIOventa ?>'>      
+            <a href='../../WEB/compras/insertar_compra.php?ID<?php echo $datos->ID ?> 
+            & nom=<?php $nombre = $datos->NOMBRE; $n = $nombre; echo $n?>
+            & nproducto=<?php $nomImg = $datos->IMAGEN; $nombre_producto = substr($nomImg, 0, -4); echo $nombre_producto ?>
+            & total=<?php echo $datos->PRECIOventa ?>'>      
             <input type='button' value='Añadir' onclick="hizoClick()">
             </a>
+
             <!-- boton editar -->
             <a href='../../backend/editar-producto-individual/editar-producto-individual.php?ID=<?php echo $datos->ID ?> & nom=<?php echo $datos->NOMBRE?> & pcompra=<?php echo $datos->PRECIOcompra?> & pventa=<?php echo $datos->PRECIOventa?> & img=<?php echo $datos->IMAGEN?> & prov=<?php echo $datos->PROOVEDOR?> & litros=<?php echo $datos->LITROS?> & lineap=<?php echo $datos->LINEAproducto?>"'>   
             <input type='button' value='editar'>
             </a>
+
             <!-- boton eliminar -->
             <a href='../../backend/eliminar-producto-individual/eliminar_producto_individual.php?ID=<?php echo $datos->ID ?> & prov=<?php echo $datos->PROOVEDOR ?> & nom=<?php echo $datos->NOMBRE ?>'>      
             <input type='button' value='eliminar'>
