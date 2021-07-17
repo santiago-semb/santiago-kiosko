@@ -40,7 +40,7 @@
             <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
             <li><a href="compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 

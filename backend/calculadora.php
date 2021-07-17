@@ -92,7 +92,7 @@
             <li><a href="../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
             <li><a href="../WEB/compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="../WEB/ventas.html" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../WEB/ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
@@ -122,6 +122,10 @@ if(isset($_POST["boton-enviar"])) {
 if($vuelto<=-1){
     $vuelto = "Error.";
 }
+if($pagaCon<$precioVenta){
+    $vuelto = "Error.";
+}
+
 
 $nombresproductos = $_GET["anom"];
 
