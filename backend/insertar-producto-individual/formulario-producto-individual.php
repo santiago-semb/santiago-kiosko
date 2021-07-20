@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
     <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <style>
 
 table {
@@ -22,7 +23,21 @@ table {
             padding:5px 0px;
             
         }
+        #p-precaucion {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
 
+        #b-precaucion {
+            margin-left: 5px;
+            margin-right: 5px;
+            color: brown;
+        }
+
+        .a-alert{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +101,7 @@ table {
         <tr>
             <td><label for="imagen"></label></td>
             <td><input type="file" name="imagen" id="imagen"></td>
+            <p id="p-precaucion"><a class="a-alert"><i class="fas fa-exclamation-triangle"></a></i><b id="b-precaucion">Asegurese de que la imagen tenga el nombre del producto (ej: coca cola 2 litros.jpg)</b><a class="a-alert"><i class="fas fa-exclamation-triangle"></i></a></p>
         </tr>
 
         <tr>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/logo-inferior/doblecola.jpg">
-    <title>Doble cola | Kiosko</title>
+    <link rel="shortcut icon" href="../assets/logo-inferior/oreo.jpg">
+    <title>Oreo | Kiosko</title>
     <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
 
     <style>
@@ -31,7 +31,7 @@
     </nav>
 
     <div id="h1-productos">
-        <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=doblecola" style="list-style: none;"><button>Añadir producto</button></a>
+        <a href="../../backend/insertar-producto-individual/formulario-producto-individual.php?nom=oreo" style="list-style: none;"><button>Añadir producto</button></a>
     </div>
 
     <div class="productos-all">
@@ -43,7 +43,7 @@
     $base = Conectar::conexion();
 
     //ordenando todos los blogs (el mas reciente primero)
-    $query = "SELECT * FROM producto_individual_doblecola ORDER BY LITROS DESC";
+    $query = "SELECT * FROM producto_individual_oreo ORDER BY LITROS DESC";
     $resultado = $base->prepare($query);
     $resultado->execute();
     $sentencia = $resultado->fetchAll(PDO::FETCH_OBJ)
@@ -63,7 +63,7 @@
             
             <script>
 function hizoClick() {
-      alert("Añadido a compras."); 
+      alert("Añadido a compras.");
 }
 </script>
              <!-- boton añadir -->   
@@ -81,6 +81,7 @@ function hizoClick() {
             <a href='../../backend/eliminar-producto-individual/eliminar_producto_individual.php?ID=<?php echo $datos->ID ?> & prov=<?php echo $datos->PROOVEDOR ?> & nom=<?php echo $datos->NOMBRE ?>'>      
             <input type='button' value='eliminar'>
             </a>
+
         
             </div>
 
