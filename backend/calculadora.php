@@ -122,9 +122,7 @@ if(isset($_POST["boton-enviar"])) {
 if($vuelto<=-1){
     $vuelto = "Error.";
 }
-if($pagaCon<$precioVenta){
-    $vuelto = "Error.";
-}
+
 
 
 $nombresproductos = $_GET["anom"];

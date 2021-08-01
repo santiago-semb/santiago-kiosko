@@ -17,6 +17,7 @@
         }
 
         .tabla-venta-confirmada {
+            background-color: whitesmoke;
             border: 2px solid black;
             width: 70%;
             margin: auto;
@@ -38,16 +39,16 @@
         }
 
         .tr-producto {
-            border: 1px solid green;
+           border: 1px solid gray;
         }
 
         .tr-total {
-            border: 1px solid violet;
+            border: 2px solid gray;
             height: 25px;
         }
 
         #td-producto {
-            border-bottom: 1px solid gray;
+            border: 1px solid gray;
         }
 
         .boton-finish {
