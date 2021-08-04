@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
     <link rel="stylesheet" href="../WEB/assets/styles/styles.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    
     <style>
         .h1-inicio {
             text-align:center;
@@ -80,6 +82,10 @@
             border: 2px solid red;
         }
 
+        .div-boton-10 {
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -123,6 +129,15 @@ if($vuelto<=-1){
     $vuelto = "Error.";
 }
 
+if(isset($_POST["porcentaje"])){
+
+        $agregado = $precioVenta * 0.1;
+        $resultado = $agregado + $precioVenta;
+        $precioVenta = $resultado;
+
+}
+
+
 
 
 $nombresproductos = $_GET["anom"];
@@ -130,7 +145,7 @@ $nombresproductos = $_GET["anom"];
 ?>
 
 
-    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"] . '&anom=' . $_GET["anom"];?>" method="post" name="form1" class="formulario-inicio">
+    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"] . '&anom=' . $_GET["anom"] . '&precio=' . $_GET["precio"];?>" method="post" name="form1" class="formulario-inicio">
     <div>
         <label for="total">Total:</label>
         <input type="text" name="total" value="<?php echo $precioVenta ?>" readonly="readonly" class="total">
@@ -139,9 +154,8 @@ $nombresproductos = $_GET["anom"];
         <label for="pagacon">Paga con:</label>
         <input type="number" name="pagacon">
     </div>
-    <div>
-        <label>Efectivo <input type="radio" name="metodopago"></label>
-        <label>Tarjeta <input type="radio" name="metodopago"></label>
+    <div class="div-boton-10">
+        <button name="porcentaje" class="boton-10">Añadir 10%</button>
     </div>
     <div>
         <label for="vuelto">Vuelto:</label>
