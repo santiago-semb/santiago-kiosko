@@ -70,6 +70,7 @@
             color: whitesmoke;
         }
 
+
     </style>
 </head>
 
@@ -113,7 +114,7 @@
 
         <h1>LISTA PRODUCTOS</h1>
 
-        <table>
+        <table style="width: 100%;">
                 <tr>
                     <th>FECHA | HORA</th>
                     <th>DESCRIPCION</th>
