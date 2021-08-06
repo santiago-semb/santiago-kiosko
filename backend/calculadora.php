@@ -22,10 +22,18 @@
             background-color: white;
             color: black;
             width: 20%;
-            height: 250px;
             line-height: 50px;
             border: 2px solid gray;
             border-radius: 0.5em;
+        }
+
+        #div-form {
+            margin: auto;
+            text-align: center;
+        }
+
+        #div-form label {
+            text-align: center;
         }
 
         .boton-calculadora {
@@ -146,22 +154,22 @@ $nombresproductos = $_GET["anom"];
 
 
     <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"] . '&anom=' . $_GET["anom"] . '&precio=' . $_GET["precio"];?>" method="post" name="form1" class="formulario-inicio">
-    <div>
+    <div id="div-form">
         <label for="total">Total:</label>
         <input type="text" name="total" value="<?php echo $precioVenta ?>" readonly="readonly" class="total">
     </div>
-    <div>
+    <div id="div-form">
         <label for="pagacon">Paga con:</label>
         <input type="number" name="pagacon">
     </div>
-    <div class="div-boton-10">
+    <div class="div-boton-10" id="div-form">
         <button name="porcentaje" class="boton-10">Añadir 10%</button>
     </div>
-    <div>
+    <div id="div-form">
         <label for="vuelto">Vuelto:</label>
         <input type="text" name="vuelto" value="<?php echo $vuelto ?>" readonly="readonly" class="vuelto">
     </div>
-    <div class="boton-calculadora">
+    <div class="boton-calculadora" id="div-form">
         <a href=""><button name="boton-enviar">Vender</button></a>
     </div>
     </form>
