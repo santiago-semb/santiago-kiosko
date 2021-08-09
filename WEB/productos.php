@@ -25,11 +25,6 @@
 
 <body>
 
-    <?php
-    require("../backend/conexion/conexion.php");
-    $base = Conectar::conexion(); 
-    ?>
-
     <header class="header">
         <h1>KIOSKITO</h1>
     </header>
@@ -65,7 +60,8 @@
 
 
         <?php
-
+        require("../backend/conexion/conexion.php");
+        $base = Conectar::conexion();
 
         //ordenando todos los blogs (el mas reciente primero)
         $query = "SELECT * FROM productoslogo ORDER BY FECHA";

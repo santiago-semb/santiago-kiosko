@@ -8,9 +8,15 @@
     <title>Inicio | Kiosko</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
     <style>
-        body {
+        table {
             font-family: Verdana;
             font-size: 12px;
+            color: #444;
+        }
+
+        #h1-lista-productos {
+            font-family: Verdana;
+            font-size: 20px;
             color: #444;
         }
 
@@ -101,9 +107,7 @@
             $name = $row["NOMBRE"];
             $fecha = $row["FECHA"];
             $total = $row["TOTAL"];
-            
-                
-            
+                       
     ?>
 
 
@@ -112,7 +116,7 @@
 
         <div id="main">
 
-        <h1>LISTA PRODUCTOS</h1>
+        <h1 id="h1-lista-productos">LISTA PRODUCTOS</h1>
 
         <table style="width: 100%;">
                 <tr>

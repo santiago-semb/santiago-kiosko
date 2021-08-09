@@ -5,7 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventas | Kiosko</title>
-    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel='stylesheet' href='assets/styles/styles.css'>
+    <link rel='stylesheet' href='assets/styles/temas.css'>
+
+    <script>
+                function cambiarModoOscuro() { 
+                    var cuerpoweb = document.body; 
+                    cuerpoweb.classList.toggle("black-body");
+                    var headerweb = document.getElementById("id-header");
+                    headerweb.classList.toggle("black-header");
+                    var headerweb = document.getElementById("id-menu");
+                    headerweb.classList.toggle("black-menu");
+                    var div = document.getElementById("div-ventas");
+                    div.classList.toggle("black-div");
+                    
+
+                    localStorage.setItem("modo", "oscuro");
+                }
+        
+                function cambiarModoClaro() {
+                    var cuerpoweb = document.body; 
+                    cuerpoweb.classList.toggle("white-body");
+                    var headerweb = document.getElementById("id-header");
+                    headerweb.classList.toggle("white-header");
+                    var headerweb = document.getElementById("id-menu");
+                    headerweb.classList.toggle("white-menu");
+                    var div = document.getElementById("div-ventas");
+                    div.classList.toggle("white-div");
+                    
+
+                    localStorage.setItem("modo", "claro");
+                }
+
+                function cambiarAmodoEstablecido() {
+                    switch(localStorage.getItem("modo")){
+                        case "oscuro": 
+                            cambiarModoOscuro();
+                            break;
+                        case "claro": 
+                            cambiarModoClaro();
+                            break;
+                    }
+                    console.log(localStorage.getItem("modo"));
+                }
+
+                
+    </script>
+
     <style>
         #div-ventas {
             margin: auto;
@@ -88,17 +134,17 @@
         }
 
         .b-name {
-            color: lightcoral;
+            color: black;
         }
 
     </style>
 </head>
-<body>
-    <header class="header">
+<body onload="cambiarAmodoEstablecido()">
+    <header class="header" id="id-header">
         <h1>KIOSKITO</h1>
     </header>
 
-    <nav class="menu">
+    <nav class="menu" id="id-menu">
         <ul>
             <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
             <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
@@ -122,7 +168,14 @@
         </p>
         
         <div class="boton-finish-ventas">
-        <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button>Eliminar todas las ventas</button></a>
+        <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
+        </div>
+
+        <div> 
+            <button type="button" class="btn btn-dark" onclick="cambiarModoOscuro()">Oscuro</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" onclick="cambiarModoClaro()">Claro</button>
         </div>
 
     <?php 

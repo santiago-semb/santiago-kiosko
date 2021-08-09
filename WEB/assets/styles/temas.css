@@ -1,0 +1,42 @@
+/* OSCURO */
+
+.black-body {
+    background-color: black;
+    color: white;
+}
+
+.black-header {
+    background-color: black;
+    color: white;
+}
+
+.black-menu {
+    background-color: black;
+    color: white;
+}
+
+.black-div {
+    color: black;
+}
+
+/* CLARO */
+
+.white-body {
+    background-color: white;
+    color: black;
+}
+
+.white-header {
+    background-color: rgb(212, 203, 203);
+    color: black;
+}
+
+.white-menu {
+    background-color: rgb(212, 203, 203);
+    color: black;
+}
+
+.white-div {
+    border: 1px solid white;
+    color: black;
+}

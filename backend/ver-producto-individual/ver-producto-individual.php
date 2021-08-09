@@ -36,6 +36,10 @@
             text-transform: uppercase;
         }
 
+        img {
+            font-size: 45px;
+        }
+
 
 
     </style>

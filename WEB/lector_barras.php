@@ -46,4 +46,7 @@
 
 </body>
 
+        <h3>Cuando sepa poner codigo de barra, lo voy a poner</h3>
+        <h6>Atte. santiago del pasado</h6>
+
 </html>
