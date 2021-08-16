@@ -8,7 +8,7 @@
     <title>Productos | Kiosko</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+    <script src="temas.js"></script>
 
     <style>
         .delete-button {
@@ -23,7 +23,7 @@
     </style>
 </head>
 
-<body>
+<body onload="cambiarAmodoEstablecido()">
 
     <header class="header">
         <h1>KIOSKITO</h1>
