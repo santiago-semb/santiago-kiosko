@@ -10,8 +10,9 @@ $nombrePaguina = trim($_GET["nom"]);
 
 
 $nombre_producto = $_GET["nproducto"];
+$imagen = $_GET["img"];
 
-$sql = "INSERT INTO compras (NOMBRE, TOTAL) VALUES ('" . $nombre_producto . "','" . $total . "')";
+$sql = "INSERT INTO compras (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $nombre_producto . "','" . $total . "','" . $imagen . "')";
 $result = $base->prepare($sql);
 $result->execute();
 

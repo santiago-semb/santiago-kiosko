@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,11 +25,6 @@
 
 <body>
 
-    <?php
-    require("../backend/conexion/conexion.php");
-    $base = Conectar::conexion(); 
-    ?>
-
     <header class="header">
         <h1>KIOSKITO</h1>
     </header>
@@ -48,5 +42,11 @@
 
         <h3>Cuando sepa poner codigo de barra, lo voy a poner</h3>
         <h6>Atte. santiago del pasado</h6>
+
+        <?php 
+            require("../WEB/metodos/metodo.php");    
+            $insertar = Metodos::insertar();  
+        ?>
+        <button onload="$insertar">Insertar</button>
 
 </html>

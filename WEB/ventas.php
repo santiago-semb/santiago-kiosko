@@ -96,7 +96,7 @@
 
     </style>
 </head>
-<body onload="cambiarAmodoEstablecido()">
+<body>
     <header class="header" id="id-header">
         <h1>KIOSKITO</h1>
     </header>
@@ -128,21 +128,12 @@
         <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
         </div>
 
-        <div> 
-            <button type="button" class="btn btn-dark" onclick="cambiarModoOscuro()">Oscuro</button>
-        </div>
-        <div>
-            <button type="button" class="btn btn-dark" onclick="cambiarModoClaro()">Claro</button>
-        </div>
 
     <?php 
 
         require("../backend/conexion/conexion.php");
         $base = Conectar::conexion();
-
-    ?>
-
-    <?php
+    
 
         //paginacion
             $tamano_paguinas=ceil(2);

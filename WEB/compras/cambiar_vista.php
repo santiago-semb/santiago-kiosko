@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
-    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="../../WEB/assets/styles/styles.css">
     
     <style>
         table {
@@ -50,14 +50,8 @@
 
         }
 
-        th {
-            padding: 5px;
-            border: 1px solid black;
-        }
-
         td{
             padding: 7px;
-            border: 1px solid gray;
         }
 
         #td-button {
@@ -72,6 +66,11 @@
             float: right;
             margin-right: 5px;
         }
+
+        .img-producto {
+            border: 5px solid white; 
+        }
+
 
         footer {
             position: relative;
@@ -93,17 +92,17 @@
 
     <nav class="menu">
         <ul>
-            <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
-            <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../../WEB/inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
+            <li><a href="../../WEB/productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
+            <li><a href="../../WEB/compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../../WEB/ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
     <h1 class="h1-inicio">Compras</h1>
 
     <?php
-            require("../backend/conexion/conexion.php");
+            require("../../backend/conexion/conexion.php");
             $base = Conectar::conexion();
 
             $sql = "SELECT * FROM compras";
@@ -125,12 +124,7 @@
         <h1 id="h1-lista-productos">LISTA PRODUCTOS</h1>
 
         <table style="width: 100%;">
-                <tr>
-                    <th>FECHA | HORA</th>
-                    <th>DESCRIPCION</th>
-                    <th>IMPUESTOS</th>
-                    <th>TOTAL</th>
-                </tr>      
+   
                     <?php 
                         $sql = "SELECT * FROM compras";
                         $resultad = $base->prepare($sql);
@@ -138,17 +132,15 @@
                     ?>         
                     <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
-                        <td><?php echo $row->FECHA ?></td>
-                        <td><b><?php $name = $row->NOMBRE; echo strtoupper($name); ?></b></td>                       
-                        <td>$ 0</td>
-                        <td>$ <?php $total = $row->TOTAL; echo $total ?></td>     
+
+                        <td>$ <?php $total = $row->TOTAL; echo $total ?></td>
+                        <td><img class="img-producto" src="../productos/image-individual/<?php $img = $row->IMAGEN; echo $img; ?>"></td>
                                    
-                        <td id="td-button"><a href="../WEB/compras/eliminar_compra.php?ID=<?php echo $row->ID ?>&url=<?php echo 'compras' ?>"><button name="bot-delete">Eliminar</button></a></td>
+                        <td id="td-button"><a href="../../WEB/compras/eliminar_compra.php?ID=<?php echo $row->ID ?>&url=<?php echo 'cambiar_vista'?>"><button name="bot-delete">Eliminar</button></a></td>
                 
                 </tr>
                     <?php endwhile; ?>      
                 <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <?php 
@@ -157,7 +149,7 @@
                                 $resultado->execute();
                                 $totales = $resultado->fetch(PDO::FETCH_OBJ);
                                 $totaltotal = $totales->preciototal;
-                                echo "<td><b>$ " . $totaltotal . "</b></td>";
+                                echo "<td style='border: 2px solid black; background-color:black;color:white; width: 15px;'>TOTAL <b>$ " . $totaltotal . "</b></td>";
                     ?>
 
                 <?php 
@@ -176,7 +168,7 @@
                         $r->execute();
                     ?>
 
-                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
+                    <td id="td-button"><a href="../../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
                     & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
                         echo "<p>" . $nombres->NOMBRE . "</p>";
                     } ?>"><button name="bot-delete">calculadora</button></a></td>
@@ -188,8 +180,8 @@
 
         <div id="sidebar">
         <!-- boton eliminar todo -->
-            <a href="../WEB/compras/eliminar_todas_las_compras.php?url=<?php echo 'compras'?>" class="a-eliminar-todo"><button>Eliminar todo</button></a>
-            <a href="../WEB/compras/cambiar_vista.php" class="a-cambiar-vista"><button>Cambiar vista</button></a>
+            <a href="../../WEB/compras/eliminar_todas_las_compras.php?url=<?php echo 'cambiar_vista'?>" class="a-eliminar-todo"><button>Eliminar todo</button></a>
+            <a href="../../WEB/compras.php" class="a-cambiar-vista"><button>Cambiar vista</button></a>
         </div>
 
     </div>
