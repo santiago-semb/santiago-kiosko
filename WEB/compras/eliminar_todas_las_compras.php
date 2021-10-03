@@ -12,9 +12,10 @@
 
     if($url=="compras") {
         header("Location:../../WEB/" . $url . ".php");
-    }
-    if($url=="cambiar_vista"){
+    }elseif($url=="cambiar_vista"){
         header("Location:../../WEB/compras/" . $url . ".php");
+    }else{
+        header("Location:../../WEB/ventas.php");
     }
 
 

@@ -123,6 +123,19 @@
                 echo $paguina; 
             ?>
         </p>
+        <?php 
+
+        require("../backend/conexion/conexion.php");
+        $base = Conectar::conexion();
+
+        $sql = "SELECT SUM(TOTAL) as ventasTotales FROM ventas";
+        $resultado = $base->prepare($sql);
+        $resultado->execute();
+        $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+        $totalTotal = $sentencia->ventasTotales;
+
+        ?>
+        <p>Ventas totales: <?php echo $totalTotal; ?></p>
         
         <div class="boton-finish-ventas">
         <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
@@ -131,8 +144,6 @@
 
     <?php 
 
-        require("../backend/conexion/conexion.php");
-        $base = Conectar::conexion();
     
 
         //paginacion
