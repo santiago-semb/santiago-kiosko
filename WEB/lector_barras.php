@@ -24,6 +24,27 @@
 </head>
 
 <body>
+        <?php 
+            require("../backend/conexion/conexion.php");
+            $base = Conectar::conexion();
+        
+            if(isset($_POST["boton-barras"])) {
+                $barcode = $_POST["barcode"];
+                $nombre_tabla = "producto_individual_cocacola";
+
+                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $resultado = $base->prepare($sql);
+                $resultado->execute();
+                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+                $imagenProducto = $sentencia->IMAGEN;
+                $nombreProducto = $sentencia->NOMBRE;
+                $litrosProducto = $sentencia->LITROS;
+                $producto = $nombreProducto . " " . $litrosProducto;
+                echo $producto;
+                echo "<img src='productos/image-individual/$imagenProducto'>";
+            }
+        
+        ?>
 
     <header class="header">
         <h1>KIOSKITO</h1>
@@ -38,15 +59,19 @@
         </ul>
     </nav>
 
-</body>
 
         <h3>Cuando sepa poner codigo de barra, lo voy a poner</h3>
         <h6>Atte. santiago del pasado</h6>
 
-        <?php 
-            require("../WEB/metodos/metodo.php");    
-            $insertar = Metodos::insertar();  
-        ?>
-        <button onload="$insertar">Insertar</button>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+            <div>
+            <label>barra</label>
+            <input type="text" name="barcode" onmouseover="this.focus();">
+            </div>
+            <div>
+            <input type="submit" name="boton-barras">
+            </div>
+        </form>
 
+</body>
 </html>
