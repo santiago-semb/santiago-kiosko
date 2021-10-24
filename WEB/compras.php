@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
-    
+    <script src="../WEB/compras/botonBarcode.js"></script>
     <style>
         table {
             font-family: Verdana;
@@ -82,11 +82,65 @@
             color: whitesmoke;
         }
 
+        .form-barcode {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #barcode-div {
+            padding: 2px;
+            width: 50%;
+            margin: 0px auto;
+        }
+
+        .input-barcode {
+            width: 200px;
+            height: 20px;
+        }
+
+        .button-barcode {
+            height: 25px;
+        }
+
 
     </style>
 </head>
 
 <body>
+<?php 
+            require("../backend/conexion/conexion.php");
+            $base = Conectar::conexion();
+
+
+            if(isset($_POST["boton-barras"])) {
+                $barcode = $_POST["barcode"];
+                $nombre_tabla = "producto_individual_cocacola";
+
+                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $resultado = $base->prepare($sql);
+                $resultado->execute();
+                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+                if($sentencia) {
+                $imagenProducto = $sentencia->IMAGEN;
+                $nombreProducto = $sentencia->NOMBRE;
+                $litrosProducto = $sentencia->LITROS;
+                $precioProducto = $sentencia->PRECIOventa;
+                $producto = $nombreProducto . " " . $litrosProducto;   
+                $imagen = "<img src='productos/image-individual/$imagenProducto'>";
+                }
+
+                if($sentencia) {
+                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $nombreProducto . "','" . $precioProducto . "','" . $imagenProducto . "')";
+                $resulset = $base->prepare($sqlInsertarComprasBarras);
+                $resulset->execute();
+                }else{
+                    echo "NO SE ENCONTRO EL PRODUCTO";
+                }
+            }
+        
+        
+        ?>
+
     <header class="header">
         <h1>KIOSKITO</h1>
     </header>
@@ -103,8 +157,6 @@
     <h1 class="h1-inicio">Compras</h1>
 
     <?php
-            require("../backend/conexion/conexion.php");
-            $base = Conectar::conexion();
 
             $sql = "SELECT * FROM compras";
             $resultado = $base->prepare($sql);
@@ -116,7 +168,16 @@
                        
     ?>
 
+    
 
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barcode" name="form-barcode-id">
+            <div id="barcode-div">
+            <label><b>BARRA</b></label>
+            <input type="text" name="barcode" onmouseover="this.focus();" class="input-barcode" id="input-barcode-id" required>
+            <input type="submit" name="boton-barras" class="button-barcode" id="button-barcode" value="Search">
+            </div>
+        </form>
+     
 
     <div id="container">
 
@@ -158,19 +219,9 @@
                                 $totales = $resultado->fetch(PDO::FETCH_OBJ);
                                 $totaltotal = $totales->preciototal;
                                 echo "<td><b>$ " . $totaltotal . "</b></td>";
-                    ?>
-
-                <?php 
-                                /*$query = "SELECT NOMBRE as nombres FROM COMPRAS";
-                                $resultado = $base->prepare($query);
-                                $resultado->execute();
-                                while($consulta = $resultado->fetch(PDO::FETCH_OBJ)){
-                                $arrayNombres = $consulta->nombres;                            
-                                echo "<p>" . $arrayNombres . "</p>";
-                                }*/
-                ?>
+                    
                 
-                    <?php 
+                    
                         $sql = "SELECT NOMBRE, TOTAL FROM compras";
                         $r = $base->prepare($sql);
                         $r->execute();
@@ -194,6 +245,8 @@
 
     </div>
     <!--end container-->
+
+    
 
     <footer>Las compras estan configuradas para enviar datos a la BBDD</footer>
 

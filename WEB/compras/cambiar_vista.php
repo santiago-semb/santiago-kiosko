@@ -86,6 +86,34 @@
 </head>
 
 <body>
+
+<?php 
+            require("../../backend/conexion/conexion.php");
+            $base = Conectar::conexion();
+        
+            if(isset($_POST["boton-barras"])) {
+                $barcode = $_POST["barcode"];
+                $nombre_tabla = "producto_individual_cocacola";
+
+                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $resultado = $base->prepare($sql);
+                $resultado->execute();
+                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+                $imagenProducto = $sentencia->IMAGEN;
+                $nombreProducto = $sentencia->NOMBRE;
+                $litrosProducto = $sentencia->LITROS;
+                $precioProducto = $sentencia->PRECIOventa;
+                $producto = $nombreProducto . " " . $litrosProducto;   
+                $imagen = "<img src='productos/image-individual/$imagenProducto'>";
+
+
+                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $nombreProducto . "','" . $precioProducto . "','" . $imagenProducto . "')";
+                $resulset = $base->prepare($sqlInsertarComprasBarras);
+                $resulset->execute();
+            }
+        
+        ?>
+
     <header class="header">
         <h1>KIOSKITO</h1>
     </header>
@@ -102,8 +130,6 @@
     <h1 class="h1-inicio">Compras</h1>
 
     <?php
-            require("../../backend/conexion/conexion.php");
-            $base = Conectar::conexion();
 
             $sql = "SELECT * FROM compras";
             $resultado = $base->prepare($sql);
@@ -115,7 +141,15 @@
                        
     ?>
 
-
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+            <div>
+            <label>barra</label>
+            <input type="text" name="barcode" onmouseover="this.focus();">
+            </div>
+            <div>
+            <input type="submit" name="boton-barras">
+            </div>
+        </form>
 
     <div id="container">
 
