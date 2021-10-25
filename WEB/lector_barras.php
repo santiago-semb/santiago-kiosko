@@ -7,18 +7,36 @@
     <title>Productos | Kiosko</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-
     <style>
-        .delete-button {
-            border: 3px solid red;
-            background-color: red;
-            color: white;
+
+        .form-barras {
+            text-align: center;
+            border:1px solid black;
+            width: 50%;
+            margin: 0px auto;
+            margin-top: 25px;
+            background-color: gray;
+            height: 400px;
         }
 
-        form {
-            padding: 3px;
+        #div-mayor-barras {
+            padding: 5px;
         }
+
+        #div-form-barras {
+            padding: 5px;
+            width: 50%;
+            margin: 0px auto;
+            background-color: white;
+        }
+
+        #div-form-barras label {
+            text-transform: uppercase;
+            text-align: center;
+            color: green;
+            border-bottom: 2px solid black;
+        }
+
     </style>
 
 </head>
@@ -29,19 +47,22 @@
             $base = Conectar::conexion();
         
             if(isset($_POST["boton-barras"])) {
-                $barcode = $_POST["barcode"];
-                $nombre_tabla = "producto_individual_cocacola";
+                
+                $nombre = $_POST["productName"];
+                $precioCompra = $_POST["productPrice"];
+                $precioVenta = $_POST["productSellPrice"];
+                $imagen = $_POST["image"];
+                $proovedor = $_POST["supplier"];
+                $litros = $_POST["liters"];                   
+                $lineaProducto = $_POST["lineProduct"];
+                $codigoBarra = $_POST["barcode"];
 
-                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $sql = "INSERT INTO barcode_products (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, LINEAproducto, CODIGOBARRA)
+                VALUES ('" . $nombre . "','" . $precioCompra . "','" . $precioVenta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "',
+                '" . $lineaProducto . "','" . $codigoBarra . "')";
                 $resultado = $base->prepare($sql);
                 $resultado->execute();
-                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
-                $imagenProducto = $sentencia->IMAGEN;
-                $nombreProducto = $sentencia->NOMBRE;
-                $litrosProducto = $sentencia->LITROS;
-                $producto = $nombreProducto . " " . $litrosProducto;
-                echo $producto;
-                echo "<img src='productos/image-individual/$imagenProducto'>";
+                
             }
         
         ?>
@@ -63,14 +84,56 @@
         <h3>Cuando sepa poner codigo de barra, lo voy a poner</h3>
         <h6>Atte. santiago del pasado</h6>
 
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
-            <div>
+        <a href="../WEB/lector_barras/editar_barcode.php"><button>Editar</button></a>
+
+        <h3 style="text-align: center; color:white;">PRUEBA CODIGO BARRA (llenar formulario)</h3>
+
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barras">
+        <div id="div-mayor-barras">
+            <div id="div-form-barras">
             <label>barra</label>
-            <input type="text" name="barcode" onmouseover="this.focus();">
+            <input type="text" name="barcode">
             </div>
-            <div>
+
+            <div id="div-form-barras">
+            <label>nombre</label>
+            <input type="text" name="productName">
+            </div>
+
+            <div id="div-form-barras">
+            <label>precio compra</label>
+            <input type="text" name="productPrice">
+            </div>
+
+            <div id="div-form-barras">
+            <label>precio venta</label>
+            <input type="text" name="productSellPrice">
+            </div>
+
+            <div id="div-form-barras">
+            <label>imagen</label>
+            <input type="file" name="image">
+            </div>
+
+            <div id="div-form-barras">
+            <label>proovedor</label>
+            <input type="text" name="supplier">
+            </div>
+
+            <div id="div-form-barras">
+            <label>litros</label>
+            <input type="text" name="liters">
+            </div>
+
+            <div id="div-form-barras">
+            <label>linea producto</label>
+            <input type="text" name="lineProduct">
+            </div>
+
+            <div id="div-form-barras">
             <input type="submit" name="boton-barras">
             </div>
+        </div>
         </form>
 
 </body>

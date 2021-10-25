@@ -81,6 +81,26 @@
             color: whitesmoke;
         }
 
+        .form-barcode {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #barcode-div {
+            padding: 2px;
+            width: 50%;
+            margin: 0px auto;
+        }
+
+        .input-barcode {
+            width: 200px;
+            height: 20px;
+        }
+
+        .button-barcode {
+            height: 25px;
+        }
+
 
     </style>
 </head>
@@ -141,13 +161,11 @@
                        
     ?>
 
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
-            <div>
-            <label>barra</label>
-            <input type="text" name="barcode" onmouseover="this.focus();">
-            </div>
-            <div>
-            <input type="submit" name="boton-barras">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barcode">
+            <div id="barcode-div">
+            <label><b>BARRA</b></label>
+            <input type="text" name="barcode" onmouseover="this.focus();" class="input-barcode">
+            <input type="submit" name="boton-barras" class="button-barcode" value="Search">
             </div>
         </form>
 

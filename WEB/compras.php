@@ -101,8 +101,22 @@
         .button-barcode {
             height: 25px;
         }
+        /* prueba estilo */
+        .menu, .header{
+            background-color: whitesmoke;
+        }
 
+        body {
+            background-color: #ccc;
+        }
 
+        .header h1{
+            color: black;
+        }
+
+        .button-li{
+            background-color: #ccc;
+        }
     </style>
 </head>
 
@@ -114,7 +128,7 @@
 
             if(isset($_POST["boton-barras"])) {
                 $barcode = $_POST["barcode"];
-                $nombre_tabla = "producto_individual_cocacola";
+                $nombre_tabla = "barcode_products";
 
                 $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
                 $resultado = $base->prepare($sql);
@@ -123,14 +137,22 @@
                 if($sentencia) {
                 $imagenProducto = $sentencia->IMAGEN;
                 $nombreProducto = $sentencia->NOMBRE;
-                $litrosProducto = $sentencia->LITROS;
+
+                if($sentencia->LITROS > 3){
+                    $litrosProducto = $sentencia->LITROS . "ML";
+                }elseif($sentencia->LITROS <= 3 && $sentencia->LITROS > 1){
+                    $litrosProducto = $sentencia->LITROS . "L";
+                }else{
+                    $litrosProducto = "";
+                }
+
                 $precioProducto = $sentencia->PRECIOventa;
                 $producto = $nombreProducto . " " . $litrosProducto;   
                 $imagen = "<img src='productos/image-individual/$imagenProducto'>";
                 }
 
                 if($sentencia) {
-                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $nombreProducto . "','" . $precioProducto . "','" . $imagenProducto . "')";
+                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $producto . "','" . $precioProducto . "','" . $imagenProducto . "')";
                 $resulset = $base->prepare($sqlInsertarComprasBarras);
                 $resulset->execute();
                 }else{

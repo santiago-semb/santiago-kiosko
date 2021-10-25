@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventas | Kiosko</title>
-    <link rel='stylesheet' href='assets/styles/styles.css'>
-    <link rel='stylesheet' href='assets/styles/temas.css'>
+    <link rel='stylesheet' href='../assets/styles/styles.css'>
     <script src="temas.js"></script>
 
     <style>
@@ -94,6 +93,19 @@
             color: black;
         }
 
+    
+        .cambiar-vista-table-ventas {
+            margin: 0px auto;
+            width: 90%;
+            border: 1px solid black;
+        }
+
+        .tr-cambiar-vista-ventas {
+            text-align: center;
+        }
+        .td-cambiar-vista-ventas {
+            border: 1px solid black;
+        }
     </style>
 </head>
 <body>
@@ -103,10 +115,10 @@
 
     <nav class="menu" id="id-menu">
         <ul>
-            <li><a href="inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
-            <li><a href="productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
-            <li><a href="compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
-            <li><a href="ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
+            <li><a href="../inicio.html" class="a-menu-li"><button class="button-li">Inicio</button></a></li>
+            <li><a href="../productos.php" class="a-menu-li"><button class="button-li">Productos</button></a></li>
+            <li><a href="../compras.php" class="a-menu-li"><button class="button-li">Compras</button></a></li>
+            <li><a href="../ventas.php" class="a-menu-li"><button class="button-li">Ventas</button></a></li>
         </ul>
     </nav>
 
@@ -125,7 +137,7 @@
         </p>
         <?php 
 
-        require("../backend/conexion/conexion.php");
+        require("../../backend/conexion/conexion.php");
         $base = Conectar::conexion();
 
         $sql = "SELECT SUM(TOTAL) as ventasTotales FROM ventas";
@@ -141,7 +153,7 @@
         <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
         </div>
         <div class="boton-finish-ventas">
-            <a href="../WEB/ventas/cambiar_vista.php"><button>Cambiar vista</button></a>
+            <a href="../ventas.php"><button>Cambiar vista</button></a>
         </div>
 
 
@@ -185,45 +197,21 @@
     ?>
 
 
-<?php foreach($resultado as $rows) : ?>
-    <div id="div-ventas">
+    <table class="cambiar-vista-table-ventas">
+        <tr>
+            <th>FECHA</th>
+            <th>PRODUCTO</th>
+            <th>TOTAL</th>
+        </tr>
+        <?php foreach($resultado as $rows) :?>
+        <tr class="tr-cambiar-vista-ventas">
+            <td class="td-cambiar-vista-ventas"><mark><?php echo $rows->FECHA ?></mark></td>
+            <td class="td-cambiar-vista-ventas"><?php echo $rows->NOMBRE ?></td>
+            <td class="td-cambiar-vista-ventas"><?php echo $rows->TOTAL ?></td>
+        </tr>
 
-        <div class="producto-individual">
-        <p class="p-tittle"><b>fecha</b></p>
-        <mark><?php echo $rows->FECHA ?></mark>
-        </div>
-
-        <div class="producto-individual-nombre">
-        <p class="p-tittle"><b>producto</b></p>
-        -<b class="b-name"><?php echo $rows->NOMBRE; ?></b>-
-        </div>
-
-        <div class="producto-individual">
-        <p class="p-tittle"><b>monto</b></p>
-        <b>$ </b><mark><?php echo $rows->TOTAL ?></mark>
-        </div>
-
-        <div class="producto-individual">
-        <p class="p-tittle"><b>impuestos</b></p>
-        <b>$ 0</b>
-        </div>
-
-        <div class="producto-individual">
-        <p class="p-tittle"><b>total</b></p>
-        <b>$ </b><mark><?php echo $rows->TOTAL ?></mark>
-        </div>
-
-        <div class="producto-individual">
-        <p><b style="color: red;">Numero de compra: <?php echo $rows->ID ?></b></p>
-        </div>
-
-        <div class="producto-individual">
-        <a class="boton-eliminar-venta" href="ventas/eliminar_venta.php?ID=<?php echo $rows->ID ?>"><button>Eliminar venta</button></a>
-        </div>
-
-    </div>
-    <?php endforeach; ?>
-
+        <?php endforeach; ?>
+    </table>
     
 
 <nav>
