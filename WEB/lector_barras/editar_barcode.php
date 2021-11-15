@@ -156,11 +156,24 @@
         ?>
         </div>
 
+        <script>
+            $(document).ready(function(){
+                $('#barcode').keydown(function(e){
+                    console.log(e.which);
+                    var term = $(this).val();
+
+                    if(e.which==13) {
+                        document.getElementById("boton-barras").click();
+                    }
+                });
+            });
+        </script>
+
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barras">
         <div id="div-mayor-barras">
             <div id="div-form-barras">
             <label>barra</label>
-            <input type="text" name="barcode" value="<?php echo $sentencia["CODIGOBARRA"] ?>">
+            <input type="text" name="barcode" id="barcode" value="<?php echo $sentencia["CODIGOBARRA"] ?>">
             </div>
 
             <div id="div-form-barras">
@@ -199,10 +212,12 @@
             </div>
 
             <div id="div-form-barras">
-            <input type="submit" name="boton-barras" value="Editar">
+            <input type="submit" name="boton-barras" id="boton-barras" value="Editar">
             </div>
         </div>
         </form>
                 <?php endif; ?>
+
+        
 </body>
 </html>
