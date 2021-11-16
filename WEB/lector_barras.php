@@ -98,7 +98,7 @@
             <label>barra</label>
             <input type="text" name="barcode">
             </div>
-
+            
             <div id="div-form-barras">
             <label>nombre</label>
             <input type="text" name="productName">
