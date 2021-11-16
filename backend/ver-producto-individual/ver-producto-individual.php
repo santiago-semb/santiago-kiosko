@@ -117,6 +117,9 @@
                 } ?></strong></td>
             </tr>
             <tr>
+                <td><b>rubro:</b><strong><?php echo $datos->RUBRO ?></strong></td>
+            </tr>
+            <tr>
                 <td><b>linea del producto:</b><strong><?php echo $datos->LINEAproducto ?></strong></td>
             </tr>
 

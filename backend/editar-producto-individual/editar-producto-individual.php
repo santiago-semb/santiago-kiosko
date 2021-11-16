@@ -81,11 +81,12 @@
         $precioVenta=$_POST["precio_venta"];
         $proovedor=$_POST["proovedor"];
         $litros=$_POST["litros"];
+        $rubro=$_POST["rubro"];
         $lineaProducto=$_POST["linea_producto"];
 
         $tabla= 'producto_individual_' . $nombre;
 
-    $sql="UPDATE $tabla SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, PROOVEDOR=:proovedor, LITROS=:litros, LINEAproducto=:lineaproducto WHERE ID=:id";
+    $sql="UPDATE $tabla SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa, PROOVEDOR=:proovedor, LITROS=:litros, RUBRO=:rubro, LINEAproducto=:lineaproducto WHERE ID=:id";
         $resultado=$base->prepare($sql);
         $resultado->bindParam(":id", $id);
         $resultado->bindParam(":nombre", $nombre);
@@ -93,6 +94,7 @@
         $resultado->bindParam(":pventa", $precioVenta);
         $resultado->bindParam(":proovedor", $proovedor);
         $resultado->bindParam(":litros", $litros);
+        $resultado->bindParam(":rubro", $rubro);
         $resultado->bindParam(":lineaproducto", $lineaProducto);
         
         $resultado->execute();
@@ -140,6 +142,22 @@
         <tr>
             <td>Litros<label for="litros"></label></td>
             <td><input type="number" name="litros" step="any" value="<?php echo round($litros); ?>">
+        </tr>
+
+        <tr>
+            <td>Rubro<label for="litros"></label></td>
+            <td>
+                <select name="rubro">
+                    <option>cigarillos</option>
+                    <option>bebidas</option>
+                    <option>golosinas</option>
+                    <option>galletas</option>
+                    <option>varios</option>
+                    <option>sandiwches</option>
+                    <option>cervezas</option>
+                    <option>lacteos</option>
+                </select>
+            </td>
         </tr>
 
         <tr>

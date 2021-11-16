@@ -123,10 +123,12 @@ if(isset($_POST["boton-enviar"])) {
 
     $nombre= $_GET["nom"];
     $fecha=$_GET["fecha"];
+    $rubro=$_GET["rubro"];
     
 }else{
     $nombre= $_GET["nom"];
-    $fecha=$_GET["fecha"];
+    //$fecha=$_GET["fecha"];
+    $rubro=$_GET["rubro"];
 
     $precioVenta = $_GET["precio"];
     $vuelto=0;
@@ -148,12 +150,12 @@ if(isset($_POST["porcentaje"])){
 
 
 
-$nombresproductos = $_GET["anom"];
+$nombresproductos = $_GET["nom"];
 
 ?>
 
 
-    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&fecha=' . $_GET["fecha"] . '&anom=' . $_GET["anom"] . '&precio=' . $_GET["precio"];?>" method="post" name="form1" class="formulario-inicio">
+    <form action="<?php echo $_SERVER['PHP_SELF'] . '?nom=' . $_GET["nom"] . '&precio=' . $_GET["precio"] . '&rubro=' . $_GET["rubro"];?>" method="post" name="form1" class="formulario-inicio">
     <div id="div-form">
         <label for="total">Total:</label>
         <input type="text" name="total" value="<?php echo $precioVenta ?>" readonly="readonly" class="total">
@@ -175,7 +177,7 @@ $nombresproductos = $_GET["anom"];
     </form>
 
     <div id="div-button-confirmar-compra">
-        <a href="../WEB/ventas/insertar_ventas.php?precio=<?php echo $precioVenta ?> & nom=<?php  echo $nombresproductos ?>"><button id="boton-confirmar-compra" name="boton-compra">confirmar compra</button></a>
+        <a href="../WEB/ventas/insertar_ventas.php?precio=<?php echo $precioVenta ?> & nom=<?php  echo $nombresproductos ?> & rubro=<?php echo $rubro ?>"><button id="boton-confirmar-compra" name="boton-compra">confirmar compra</button></a>
     </div>
 
     <div id="div-button-confirmar-compra">

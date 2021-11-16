@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Kiosko</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="../WEB/compras/botonBarcode.js"></script>
     <style>
         table {
@@ -82,23 +83,23 @@
             color: whitesmoke;
         }
 
-        .form-barcode {
+        .form-barcode, .form-busqueda-barras {
             text-align: center;
             padding: 10px;
         }
 
-        #barcode-div {
+        #barcode-div, .div-busqueda-barras {
             padding: 2px;
             width: 50%;
             margin: 0px auto;
         }
 
-        .input-barcode {
+        .input-barcode, .input-busqueda-barras {
             width: 200px;
             height: 20px;
         }
 
-        .button-barcode {
+        .button-barcode, .button-busqueda-barras {
             height: 25px;
         }
         /* prueba estilo */
@@ -117,51 +118,11 @@
         .button-li{
             background-color: #ccc;
         }
+
     </style>
 </head>
 
 <body>
-<?php 
-            require("../backend/conexion/conexion.php");
-            $base = Conectar::conexion();
-
-
-            if(isset($_POST["boton-barras"])) {
-                $barcode = $_POST["barcode"];
-                $nombre_tabla = "barcode_products";
-
-                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
-                $resultado = $base->prepare($sql);
-                $resultado->execute();
-                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
-                if($sentencia) {
-                $imagenProducto = $sentencia->IMAGEN;
-                $nombreProducto = $sentencia->NOMBRE;
-
-                if($sentencia->LITROS > 3){
-                    $litrosProducto = $sentencia->LITROS . "ML";
-                }elseif($sentencia->LITROS <= 3 && $sentencia->LITROS > 1){
-                    $litrosProducto = $sentencia->LITROS . "L";
-                }else{
-                    $litrosProducto = "";
-                }
-
-                $precioProducto = $sentencia->PRECIOventa;
-                $producto = $nombreProducto . " " . $litrosProducto;   
-                $imagen = "<img src='productos/image-individual/$imagenProducto'>";
-                }
-
-                if($sentencia) {
-                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $producto . "','" . $precioProducto . "','" . $imagenProducto . "')";
-                $resulset = $base->prepare($sqlInsertarComprasBarras);
-                $resulset->execute();
-                }else{
-                    echo "NO SE ENCONTRO EL PRODUCTO";
-                }
-            }
-        
-        
-        ?>
 
     <header class="header">
         <h1>KIOSKITO</h1>
@@ -180,14 +141,19 @@
 
     <?php
 
+        require("../backend/conexion/conexion.php");
+        $base = Conectar::conexion();
+
             $sql = "SELECT * FROM compras";
             $resultado = $base->prepare($sql);
             $resultado->execute();
             $row = $resultado->fetch(PDO::FETCH_ASSOC);
-            $name = $row["NOMBRE"];
-            $fecha = $row["FECHA"];
-            $total = $row["TOTAL"];
-                       
+            if(isset($row["NOMBRE"]) && isset($row["FECHA"]) && isset($row["TOTAL"])){ 
+                $name = $row["NOMBRE"];
+                $fecha = $row["FECHA"];
+                $total = $row["TOTAL"];
+                $rubro = $row["RUBRO"];
+            }
     ?>
 
     
@@ -195,10 +161,23 @@
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barcode" name="form-barcode-id">
             <div id="barcode-div">
             <label><b>BARRA</b></label>
-            <input type="text" name="barcode" onmouseover="this.focus();" class="input-barcode" id="input-barcode-id" required>
+            <input type="text" name="barcode" class="input-barcode" id="input-barcode-id" required autocomplete="off">
             <input type="submit" name="boton-barras" class="button-barcode" id="button-barcode" value="Search">
             </div>
         </form>
+
+        <form method="get" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-busqueda-barras">
+        <div class="div-busqueda-barras">
+            <label><b>BUSCAR</b></label>
+            <input type="text" placeholder=" Buscar producto..." class="input-busqueda-barras" name="search" autocomplete="off">
+            <button class="button-busqueda-barras" type="submit" name="busqueda">Search</button>
+        </div>
+        </form>
+
+        <script>
+            let inputBarra = document.getElementById("input-barcode-id");
+            inputBarra.focus();
+        </script>
      
 
     <div id="container">
@@ -208,6 +187,47 @@
         <h1 id="h1-lista-productos">LISTA PRODUCTOS</h1>
 
         <table style="width: 100%;">
+
+        <?php 
+
+            if(isset($_POST["boton-barras"])) {
+                $barcode = $_POST["barcode"];
+                $nombre_tabla = "barcode_products";
+
+                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $resultado = $base->prepare($sql);
+                $resultado->execute();
+                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+                if($sentencia) {
+                $imagenProducto = $sentencia->IMAGEN;
+                $nombreProducto = $sentencia->NOMBRE;
+                $rubro = $sentencia->RUBRO;
+
+                if($sentencia->LITROS > 3){
+                    $litrosProducto = $sentencia->LITROS . "ML";
+                }elseif($sentencia->LITROS <= 3 && $sentencia->LITROS > 1){
+                    $litrosProducto = $sentencia->LITROS . "L";
+                }else{
+                    $litrosProducto = "";
+                }
+
+                $precioProducto = $sentencia->PRECIOventa;
+                $producto = $nombreProducto . " " . $litrosProducto;   
+                $imagen = "<img src='productos/image-individual/$imagenProducto'>";
+                }
+
+                if($sentencia) {
+                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, RUBRO, TOTAL, IMAGEN) VALUES ('" . $producto . "','" . $rubro . "','" . $precioProducto . "','" . $imagenProducto . "')";
+                $resulset = $base->prepare($sqlInsertarComprasBarras);
+                $resulset->execute();
+                }else{
+                    echo "<h3 style='color: red;'>NO SE ENCONTRO EL PRODUCTO</h3>";
+                }
+            }
+        
+        
+        ?>
+        
                 <tr>
                     <th>FECHA | HORA</th>
                     <th>DESCRIPCION</th>
@@ -221,15 +241,15 @@
                     ?>         
                     <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
-                        <td><?php echo $row->FECHA ?></td>
+                        <td><?php $fecha = $row->FECHA; echo $fecha; ?></td>
                         <td><b><?php $name = $row->NOMBRE; echo strtoupper($name); ?></b></td>                       
                         <td>$ 0</td>
-                        <td>$ <?php $total = $row->TOTAL; echo $total ?></td>     
+                        <td>$ <?php $total = $row->TOTAL; echo $total; ?></td> 
                                    
                         <td id="td-button"><a href="../WEB/compras/eliminar_compra.php?ID=<?php echo $row->ID ?>&url=<?php echo 'compras' ?>"><button name="bot-delete">Eliminar</button></a></td>
                 
                 </tr>
-                    <?php endwhile; ?>      
+                    <?php endwhile; ?>  
                 <tr>
                     <td></td>
                     <td></td>
@@ -244,16 +264,117 @@
                     
                 
                     
-                        $sql = "SELECT NOMBRE, TOTAL FROM compras";
+                        $sql = "SELECT * FROM compras";
                         $r = $base->prepare($sql);
                         $r->execute();
+
+                        $nombresArray;
+                        
+                    
+                    while($reg = $r->fetchAll(PDO::FETCH_COLUMN,2)) {
+
+                        $nombresArray = $reg;
+
+                    }
+
+                    while($reg = $r->fetchAll(PDO::FETCH_COLUMN,4)) {
+
+                        $preciosArray = $reg;
+
+                    }
+
+
+                    ?>
+                    <form method="post" action="prueba_ventas.php">
+                    <?php for($i=0;$i<=count($nombresArray);$i++) : ?>
+ 
+                    <input type="hidden" name="nombre1" value="<?php if(isset($nombresArray[0])){echo $nombresArray[0];} ?>">
+                    <input type="hidden" name="precio1" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre2" value="<?php if(isset($nombresArray[1])){echo $nombresArray[1];} ?>">
+                    <input type="hidden" name="precio2" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre3" value="<?php if(isset($nombresArray[2])){echo $nombresArray[2];} ?>">
+                    <input type="hidden" name="precio3" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre4" value="<?php if(isset($nombresArray[3])){echo $nombresArray[3];} ?>">
+                    <input type="hidden" name="precio4" value="<?php //echo $preciosArray[$contador] ?>">
+                    
+                    <input type="hidden" name="nombre5" value="<?php if(isset($nombresArray[4])){echo $nombresArray[4];}  ?>">
+                    <input type="hidden" name="precio5" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre6" value="<?php if(isset($nombresArray[5])){echo $nombresArray[5];} ?>">
+                    <input type="hidden" name="precio6" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre7" value="<?php if(isset($nombresArray[6])){echo $nombresArray[6];} ?>">
+                    <input type="hidden" name="precio7" value="<?php //echo $preciosArray[$contador] ?>">
+
+                    <input type="hidden" name="nombre8" value="<?php if(isset($nombresArray[7])){echo $nombresArray[7];} ?>">
+                    <input type="hidden" name="precio8" value="<?php //echo $preciosArray[$contador] ?>">
+                    <!--<input type="hidden" name="" value="">-->
+                    <?php $i++; endfor; ?>
+                    <a href="prueba_ventas.php"><button>ee</button></a>
+                    </form>
+                    
+
+<?php 
+                        $sql = "SELECT * FROM compras";
+                        $r = $base->prepare($sql);
+                        $r->execute();
+                        $row = $r->fetch(PDO::FETCH_ASSOC);
+
+                        if(isset($row["NOMBRE"]) && isset($row["FECHA"]) && isset($row["TOTAL"]) && isset($row["RUBRO"])){ 
+                            $name2 = $row["NOMBRE"];
+                            $fecha = $row["FECHA"];
+                            $total = $row["TOTAL"];
+                            $rubro = $row["RUBRO"];
+                        }
                     ?>
 
-                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
-                    & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
-                        echo "<p>" . $nombres->NOMBRE . "</p>";
-                    } ?>"><button name="bot-delete">calculadora</button></a></td>
+                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?> & rubro=<?php echo $rubro ?>">
+                    <button name="bot-delete">calculadora</button></a></td>
+                    <!-- calc2 -->
+                    <?php 
+
+                        $sql3 = "SELECT * FROM compras";
+                        $resSql3 = $base->prepare($sql3);
+                        $resSql3->execute();
+                        
+                    ?>
                 </tr>  
+                
+        <?php
+                    if(isset($_GET["busqueda"])){
+                            $search = $_GET["search"];
+
+                            $sql = "SELECT * FROM barcode_products WHERE NOMBRE LIKE '%$search%'";
+                            $result = $base->prepare($sql);
+                            $result->execute();
+
+
+                        while($registro=$result->fetch(PDO::FETCH_OBJ)){
+
+                            if($registro->IMAGEN != ""){
+
+                                
+                                echo "<div class='cuadro-individual-productos'>"; 
+                        
+                                echo "<a href='../WEB/compras/insertar_compra.php?ID=$registro->ID & nproducto=$registro->NOMBRE & total=$registro->PRECIOventa & img=$registro->IMAGEN & nom=compras & rubro=$registro->RUBRO' class='cuadro-producto'><img id='imagen-productos' src='../WEB/productos/image-individual/" . $registro->IMAGEN . "'/></a>";
+                        
+                                echo "</div>";
+
+
+                                    
+                                }
+                                
+                        
+                            }
+                        }
+
+
+                
+            
+        ?>
                         
         </table>
          

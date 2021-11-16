@@ -21,7 +21,7 @@
             margin: 0px auto;
             margin-top: 25px;
             background-color: gray;
-            height: 400px;
+            height: 415px;
         }
 
         #div-mayor-barras {
@@ -52,6 +52,10 @@
             margin-top: 15px;
         }
 
+        #select-option {
+            width: 150px;
+        }
+
     </style>
 
 </head>
@@ -60,30 +64,34 @@
         <?php 
             require("../../backend/conexion/conexion.php");
             $base = Conectar::conexion();
-        
+
             if(isset($_POST["boton-barras"])) {
-                
+                $id = $_GET["id"];
                 $nombre = $_POST["productName"];
                 $precioCompra = $_POST["productPrice"];
                 $precioVenta = $_POST["productSellPrice"];
                 $proovedor = $_POST["supplier"];
-                $litros = $_POST["liters"];                   
+                $litros = $_POST["liters"];  
+                $rubro = $_POST["rubro"];                 
                 $lineaProducto = $_POST["lineProduct"];
                 $codigoBarra = $_POST["barcode"];
+                
 
                 $query2 = "UPDATE barcode_products SET NOMBRE=:nombre, PRECIOcompra=:pcompra, PRECIOventa=:pventa,
-                PROOVEDOR=:proov, LITROS=:l, LINEAproducto=:lproducto, CODIGOBARRA=:bcode";
+                PROOVEDOR=:proov, LITROS=:l, RUBRO=:rubr, LINEAproducto=:lproducto, CODIGOBARRA=:bcode WHERE ID=$id";
                 $res2 = $base->prepare($query2);
                 $res2->bindParam(":nombre", $nombre);
                 $res2->bindParam(":pcompra", $precioCompra);
                 $res2->bindParam(":pventa", $precioVenta);
                 $res2->bindParam(":proov", $proovedor);
                 $res2->bindParam(":l", $litros);
+                $res2->bindParam(":rubr", $rubro);
                 $res2->bindParam(":lproducto", $lineaProducto);
                 $res2->bindParam(":bcode", $codigoBarra);
                 $res2->execute();
 
             }
+        
            
         
         ?>
@@ -156,7 +164,7 @@
         ?>
         </div>
 
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barras">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET["id"] ?>" class="form-barras">
         <div id="div-mayor-barras">
             <div id="div-form-barras">
             <label>barra</label>
@@ -191,6 +199,21 @@
             <div id="div-form-barras">
             <label>litros</label>
             <input type="text" name="liters" value="<?php echo $sentencia["LITROS"] ?>">
+            </div>
+
+            <div id="div-form-barras">
+            <label>rubro</label>
+                <select name="rubro" id="select-option" selected="ss">
+                <option disbaled value="">Seleccionar rubro</option>
+                    <option>cigarrillos</option>
+                    <option>bebidas</option>
+                    <option>golosinas</option>
+                    <option>galletas</option>
+                    <option>varios</option>
+                    <option>sandiwches</option>
+                    <option>cervezas</option>
+                    <option>lacteos</option>
+                </select>
             </div>
 
             <div id="div-form-barras">
