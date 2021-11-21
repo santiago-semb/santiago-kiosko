@@ -162,7 +162,7 @@
     
 
         //paginacion
-            $tamano_paguinas=ceil(2);
+            $tamano_paguinas=ceil(6);
 
             if(isset($_GET["paguina"])) {
                 if($_GET["paguina"]==1) {

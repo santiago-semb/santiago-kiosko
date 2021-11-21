@@ -256,55 +256,33 @@
                         $nombresArray = $reg;
 
                     }
-                    
-                    if(isset($nombresArray[0])){
-                    echo $nombresArray[0];
-                    }
-                    if(isset($nombresArray[1])){
-                        echo $nombresArray[1];
-                        }
-                        if(isset($nombresArray[2])){
-                            echo $nombresArray[2];
-                            }
-                            if(isset($nombresArray[3])){
-                                echo $nombresArray[3];
-                                }
-                                if(isset($nombresArray[4])){
-                                    echo $nombresArray[4];
-                                    }
+
 
 
                     ?>
-                    <form method="post" action="prueba_ventas.php">
-                    <?php for($i=0;$i<=count($nombresArray);$i++) : ?>
- 
-                    <input type="hidden" name="nombre1" value="<?php if(isset($nombresArray[0])){echo $nombresArray[0];} ?>">
-                    <input type="hidden" name="precio1" value="<?php //echo $preciosArray[$contador] ?>">
 
-                    <input type="hidden" name="nombre2" value="<?php if(isset($nombresArray[1])){echo $nombresArray[1];} ?>">
-                    <input type="hidden" name="precio2" value="<?php //echo $preciosArray[$contador] ?>">
-
-                    <input type="hidden" name="nombre3" value="<?php if(isset($nombresArray[2])){echo $nombresArray[2];} ?>">
-                    <input type="hidden" name="precio3" value="<?php //echo $preciosArray[$contador] ?>">
-
-                    <input type="hidden" name="nombre4" value="<?php if(isset($nombresArray[3])){echo $nombresArray[3];} ?>">
-                    <input type="hidden" name="precio4" value="<?php //echo $preciosArray[$contador] ?>">
                     
-                    <input type="hidden" name="nombre5" value="<?php if(isset($nombresArray[4])){echo $nombresArray[4];}  ?>">
-                    <input type="hidden" name="precio5" value="<?php //echo $preciosArray[$contador] ?>">
+                    <form method="post" action="prueba_ventas.php">
+                    <?php for($i=1;$i<=count($nombresArray);$i++) : ?>
+                    <?php 
+                        $contador = $i;
+                        $contadorValueOfInput = $i-1;
 
-                    <input type="hidden" name="nombre6" value="<?php if(isset($nombresArray[5])){echo $nombresArray[5];} ?>">
-                    <input type="hidden" name="precio6" value="<?php //echo $preciosArray[$contador] ?>">
+                        $nombreHtml = "nombre$contador";
+                        $precioHtml = "precio$contador";
+                        echo $nombreHtml;
+                        
+                    ?>
+                    <!-- inputs para pasar el $_post de nombre, precio y rubro -->
+                    <!-- estan dentro de un bucle para repetirse las veces que sea necesaria (registros) -->
+                    <input type="hidden" name="<?php echo $nombreHtml ?>" value="<?php if(isset($nombresArray[$contadorValueOfInput])){echo $nombresArray[$contadorValueOfInput];} ?>">
+                    <input type="hidden" name="<?php echo $precioHtml ?>" value="<?php //echo $preciosArray[$contador] ?>">
 
-                    <input type="hidden" name="nombre7" value="<?php if(isset($nombresArray[6])){echo $nombresArray[6];} ?>">
-                    <input type="hidden" name="precio7" value="<?php //echo $preciosArray[$contador] ?>">
-
-                    <input type="hidden" name="nombre8" value="<?php if(isset($nombresArray[7])){echo $nombresArray[7];} ?>">
-                    <input type="hidden" name="precio8" value="<?php //echo $preciosArray[$contador] ?>">
-                    <!--<input type="hidden" name="" value="">-->
-                    <?php $i++; endfor; ?>
+                    <?php $contador++; $contadorValueOfInput++; endfor;?>
                     <a href="prueba_ventas.php"><button>ee</button></a>
                     </form>
+
+
                     <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
                     & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
                         echo "<p>" . $nombres->NOMBRE . "</p>";
