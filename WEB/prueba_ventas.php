@@ -2,11 +2,6 @@
 
 require("../backend/conexion/conexion.php");
     $base = Conectar::conexion();
-<<<<<<< HEAD
-//$_post   
-=======
-
->>>>>>> 67d42383c8020311d2003e2d119fa085abf40064
     $name1 = $_POST["nombre1"];
     $name2 = $_POST["nombre2"];
     $name3 = $_POST["nombre3"];
@@ -25,18 +20,6 @@ require("../backend/conexion/conexion.php");
     $price3 = $_POST["price7"];
     $price4 = $_POST["price8"];
 
-<<<<<<< HEAD
-    $rubro1 = $_POST["rubro1"];
-    $rubro2 = $_POST["rubro2"];
-    $rubro3 = $_POST["rubro3"];
-    $rubro4 = $_POST["rubro4"];
-    $rubro5 = $_POST["rubro5"];
-    $rubro6 = $_POST["rubro6"];
-    $rubro7 = $_POST["rubro7"];
-    $rubro8 = $_POST["rubro8"];
-//$_post end
-=======
->>>>>>> 67d42383c8020311d2003e2d119fa085abf40064
    for($i=1;$i<=8;$i++){
 
         $contador = $i;
@@ -95,11 +78,7 @@ require("../backend/conexion/conexion.php");
 
         if(!$sqlName == null || !$sqlName == ""){
         
-<<<<<<< HEAD
         $sql = "INSERT INTO ventas (NOMBRE, RUBRO, TOTAL) VALUES ('" . $sqlName . "','" . $rubro . "','" . $price . "')";
-=======
-        $sql = "INSERT INTO ventas (NOMBRE, TOTAL) VALUES ('" . $sqlName . "','" . $price . "')";
->>>>>>> 67d42383c8020311d2003e2d119fa085abf40064
         $k = $base->prepare($sql);
         $k->execute();
 
