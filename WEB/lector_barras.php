@@ -16,7 +16,7 @@
             margin: 0px auto;
             margin-top: 25px;
             background-color: gray;
-            height: 400px;
+            height: 425px;
         }
 
         #div-mayor-barras {
@@ -36,7 +36,10 @@
             color: green;
             border-bottom: 2px solid black;
         }
-
+        
+        #select-option {
+            width: 150px;
+        }
     </style>
 
 </head>
@@ -53,13 +56,14 @@
                 $precioVenta = $_POST["productSellPrice"];
                 $imagen = $_POST["image"];
                 $proovedor = $_POST["supplier"];
-                $litros = $_POST["liters"];                   
+                $litros = $_POST["liters"];      
+                $rubro = $_POST ["rubro"];            
                 $lineaProducto = $_POST["lineProduct"];
                 $codigoBarra = $_POST["barcode"];
 
-                $sql = "INSERT INTO barcode_products (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, LINEAproducto, CODIGOBARRA)
+                $sql = "INSERT INTO barcode_products (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, RUBRO, LINEAproducto, CODIGOBARRA)
                 VALUES ('" . $nombre . "','" . $precioCompra . "','" . $precioVenta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "',
-                '" . $lineaProducto . "','" . $codigoBarra . "')";
+                '" . $rubro . "','" . $lineaProducto . "','" . $codigoBarra . "')";
                 $resultado = $base->prepare($sql);
                 $resultado->execute();
                 
@@ -123,6 +127,22 @@
             <div id="div-form-barras">
             <label>litros</label>
             <input type="text" name="liters">
+            </div>
+
+            <div id="div-form-barras">
+            <label>rubro</label>
+            <select name="rubro" id="select-option">
+                <option disbaled value="">Seleccionar rubro</option>
+                <option>cigarillos</option>
+                <option>bebidas</option>
+                <option>golosinas</option>
+                <option>galletas</option>
+                <option>varios</option>
+                <option>sandiwches</option>
+                <!--<option></option>-->
+                <!--<option></option>-->
+                <!--<option></option>-->
+            </select>
             </div>
 
             <div id="div-form-barras">

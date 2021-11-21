@@ -115,6 +115,24 @@ table {
         </tr>
 
         <tr>
+            <td>Rubro<label for="litros"></label></td>
+        <td>
+            <select name="rubro">
+                <option disbaled value="">Seleccionar rubro</option>
+                <option>cigarrillos</option>
+                <option>bebidas</option>
+                <option>golosinas</option>
+                <option>galletas</option>
+                <option>varios</option>
+                <option>sandiwches</option>
+                <option>cervezas</option>
+                <option>lacteos</option>
+            </select>
+        </td>
+        </tr>
+
+
+        <tr>
             <td>Linea del producto<label for="linea_producto"></label></td>
             <td><input type="text" name="linea_producto">
         </tr>

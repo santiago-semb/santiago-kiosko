@@ -50,12 +50,13 @@
     $imagen = $_FILES["imagen"]["name"];
     $proovedor = $_POST["proovedor"];
     $litros = $_POST["litros"];
+    $rubro = $_POST["rubro"];
     $linea_producto = $_POST["linea_producto"];
 
     $tabla= 'producto_individual_' . $nombre;
     
 
-    $query = "INSERT INTO $tabla (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, LINEAproducto) VALUES ('" . $nombre . "','" . $precio_compra . "','" . $precio_venta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "','" . $linea_producto . "')";
+    $query = "INSERT INTO $tabla (NOMBRE, PRECIOcompra, PRECIOventa, IMAGEN, PROOVEDOR, LITROS, RUBRO, LINEAproducto) VALUES ('" . $nombre . "','" . $precio_compra . "','" . $precio_venta . "','" . $imagen . "','" . $proovedor . "','" . $litros . "','" . $rubro . "','" . $linea_producto . "')";
     $resultado = $base->prepare($query);
     $resultado->execute();
 

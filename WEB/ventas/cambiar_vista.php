@@ -105,6 +105,8 @@
         }
         .td-cambiar-vista-ventas {
             border: 1px solid black;
+            text-transform: uppercase;
+            color: blue;
         }
     </style>
 </head>
@@ -150,7 +152,7 @@
         <p>Ventas totales: <?php echo $totalTotal; ?></p>
         
         <div class="boton-finish-ventas">
-        <a href="../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
+        <a href="../../WEB/ventas/eliminar_todas_las_ventas.php"><button name="boton-eliminar-venta">Eliminar todas las ventas</button></a>
         </div>
         <div class="boton-finish-ventas">
             <a href="../ventas.php"><button>Cambiar vista</button></a>
@@ -162,12 +164,12 @@
     
 
         //paginacion
-            $tamano_paguinas=ceil(6);
+            $tamano_paguinas=ceil(12);
 
             if(isset($_GET["paguina"])) {
                 if($_GET["paguina"]==1) {
                     
-                    header("location:ventas.php");
+                    header("location:cambiar_vista.php");
                 }else{
                     $paguina=$_GET["paguina"];
                 }
@@ -187,7 +189,7 @@
     
     ?>
 
-    <?php     
+    <?php
         //para recorrer los registros con limit (para la paginacion)
         $sql_limite=$base->prepare("SELECT * FROM ventas ORDER BY ID DESC LIMIT ?,?");
         $sql_limite->bindParam(1, $empezar_desde, PDO::PARAM_INT);
@@ -196,23 +198,93 @@
         $resultado=$sql_limite->fetchAll(PDO::FETCH_OBJ);
     ?>
 
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+        <h6>buscar por rubro</h6>
+        <div>
+            <select name="rubro-busqueda">
+            <option disbaled value="">Seleccionar rubro</option>
+                    <option>cigarrillos</option>
+                    <option>bebidas</option>
+                    <option>golosinas</option>
+                    <option>galletas</option>
+                    <option>varios</option>
+                    <option>sandiwches</option>
+                    <option>cervezas</option>
+                    <option>lacteos</option>
+            </select>
+            <input type="submit" value="Search" name="boton-busqueda-select-option">
+        </div>
+    </form>
 
+
+    <?php
+    if(isset($_POST["boton-busqueda-select-option"])) :
+        $rubroBusqueda = $_POST["rubro-busqueda"];
+
+        $sql = "SELECT * FROM VENTAS WHERE RUBRO='$rubroBusqueda'";
+        $resultado = $base->prepare($sql);
+        $resultado->execute();
+        $row = $resultado->fetch(PDO::FETCH_OBJ);
+        if(isset($row->NOMBRE) && isset($row->RUBRO) && isset($row->FECHA) && isset($row->TOTAL)){ 
+            $name = $row->NOMBRE;
+            $fecha = $row->FECHA;
+            $total = $row->TOTAL;
+            $rubro = $row->RUBRO;
+        }
+        
+        ?>
+        
+    <table class='cambiar-vista-table-ventas'>
+        <tr>
+            <th>FECHA</th>
+            <th>PRODUCTO</th>
+            <th>RUBRO</th>
+            <th>TOTAL</th>
+        </tr>
+        <?php
+            $query = "SELECT * FROM VENTAS WHERE RUBRO='$rubroBusqueda'";
+            $res = $base->prepare($query);
+            $res->execute();
+        ?>
+      <?php while($row = $res->fetch(PDO::FETCH_OBJ)) : ?>
+        <tr class='tr-cambiar-vista-ventas'>
+            <td class='td-cambiar-vista-ventas'><mark><?php $fecha = $row->FECHA; echo $fecha; ?></mark></td>
+            <td class='td-cambiar-vista-ventas'><?php $nombre = $row->NOMBRE; echo $nombre; ?></td>
+            <td class='td-cambiar-vista-ventas'><?php $rubro = $row->RUBRO; echo $rubro;?></td>
+            <td class='td-cambiar-vista-ventas'><?php $total = $row->TOTAL; echo $total;?></td>
+        </tr>
+        <?php endwhile; 
+    
+    endif;?>
+ 
+    </table>
+
+         
+
+     
+
+
+
+
+    
+<?php if(!isset($_POST["boton-busqueda-select-option"])) : ?>
     <table class="cambiar-vista-table-ventas">
         <tr>
             <th>FECHA</th>
             <th>PRODUCTO</th>
+            <th>RUBRO</th>
             <th>TOTAL</th>
         </tr>
         <?php foreach($resultado as $rows) :?>
         <tr class="tr-cambiar-vista-ventas">
             <td class="td-cambiar-vista-ventas"><mark><?php echo $rows->FECHA ?></mark></td>
             <td class="td-cambiar-vista-ventas"><?php echo $rows->NOMBRE ?></td>
+            <td class="td-cambiar-vista-ventas"><?php echo $rows->RUBRO ?></td>
             <td class="td-cambiar-vista-ventas"><?php echo $rows->TOTAL ?></td>
         </tr>
-
         <?php endforeach; ?>
     </table>
-    
+<?php  endif; ?>
 
 <nav>
     <div class="paginacion">

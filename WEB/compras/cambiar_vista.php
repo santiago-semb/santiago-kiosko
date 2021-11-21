@@ -81,23 +81,23 @@
             color: whitesmoke;
         }
 
-        .form-barcode {
+        .form-barcode, .form-busqueda-barras {
             text-align: center;
             padding: 10px;
         }
 
-        #barcode-div {
+        #barcode-div, .div-busqueda-barras {
             padding: 2px;
             width: 50%;
             margin: 0px auto;
         }
 
-        .input-barcode {
+        .input-barcode, .input-busqueda-barras {
             width: 200px;
             height: 20px;
         }
 
-        .button-barcode {
+        .button-barcode, .button-busqueda-barras {
             height: 25px;
         }
 
@@ -106,33 +106,6 @@
 </head>
 
 <body>
-
-<?php 
-            require("../../backend/conexion/conexion.php");
-            $base = Conectar::conexion();
-        
-            if(isset($_POST["boton-barras"])) {
-                $barcode = $_POST["barcode"];
-                $nombre_tabla = "producto_individual_cocacola";
-
-                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
-                $resultado = $base->prepare($sql);
-                $resultado->execute();
-                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
-                $imagenProducto = $sentencia->IMAGEN;
-                $nombreProducto = $sentencia->NOMBRE;
-                $litrosProducto = $sentencia->LITROS;
-                $precioProducto = $sentencia->PRECIOventa;
-                $producto = $nombreProducto . " " . $litrosProducto;   
-                $imagen = "<img src='productos/image-individual/$imagenProducto'>";
-
-
-                $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, IMAGEN) VALUES ('" . $nombreProducto . "','" . $precioProducto . "','" . $imagenProducto . "')";
-                $resulset = $base->prepare($sqlInsertarComprasBarras);
-                $resulset->execute();
-            }
-        
-        ?>
 
     <header class="header">
         <h1>KIOSKITO</h1>
@@ -149,25 +122,34 @@
 
     <h1 class="h1-inicio">Compras</h1>
 
-    <?php
+    <?php 
+    
+    require("../../backend/conexion/conexion.php");
+    $base = Conectar::conexion();
 
-            $sql = "SELECT * FROM compras";
-            $resultado = $base->prepare($sql);
-            $resultado->execute();
-            $row = $resultado->fetch(PDO::FETCH_ASSOC);
-            $name = $row["NOMBRE"];
-            $fecha = $row["FECHA"];
-            $total = $row["TOTAL"];
-                       
+            
     ?>
 
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barcode">
             <div id="barcode-div">
             <label><b>BARRA</b></label>
-            <input type="text" name="barcode" onmouseover="this.focus();" class="input-barcode">
+            <input type="text" name="barcode" class="input-barcode" id="input-barcode-id" required autocomplete="off">
             <input type="submit" name="boton-barras" class="button-barcode" value="Search">
             </div>
         </form>
+
+        <form method="get" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-busqueda-barras">
+        <div class="div-busqueda-barras">
+            <label><b>BUSCAR</b></label>
+            <input type="text" placeholder=" Buscar producto..." class="input-busqueda-barras" name="search" autocomplete="off">
+            <button class="button-busqueda-barras" type="submit" name="busqueda">Search</button>
+        </div>
+        </form>
+
+        <script>
+            let inputBarra = document.getElementById("input-barcode-id");
+            inputBarra.focus();
+        </script>
 
     <div id="container">
 
@@ -176,6 +158,62 @@
         <h1 id="h1-lista-productos">LISTA PRODUCTOS</h1>
 
         <table style="width: 100%;">
+
+        <?php 
+            
+            if(isset($_POST["boton-barras"])) {
+                $barcode = $_POST["barcode"];
+                $nombre_tabla = "barcode_products";
+
+                $sql = "SELECT * FROM $nombre_tabla WHERE CODIGOBARRA=$barcode";
+                $resultado = $base->prepare($sql);
+                $resultado->execute();
+                $sentencia = $resultado->fetch(PDO::FETCH_OBJ);
+                if(isset($sentencia->NOMBRE) && isset($sentencia->IMAGEN) && isset($sentencia->TOTAL)) { 
+                    $imagenProducto = $sentencia->IMAGEN;
+                    $nombreProducto = $sentencia->NOMBRE;
+                    $litrosProducto = $sentencia->LITROS;
+                    $precioProducto = $sentencia->PRECIOventa;
+                    $producto = $nombreProducto . " " . $litrosProducto;   
+                    $imagen = "<img src='productos/image-individual/$imagenProducto'>";
+                }
+                
+
+                if($sentencia) {
+                    $imagenProducto = $sentencia->IMAGEN;
+                    $nombreProducto = $sentencia->NOMBRE;
+    
+                    if($sentencia->LITROS > 3){
+                        $litrosProducto = $sentencia->LITROS . "ML";
+                    }elseif($sentencia->LITROS <= 3 && $sentencia->LITROS > 1){
+                        $litrosProducto = $sentencia->LITROS . "L";
+                    }else{
+                        $litrosProducto = "";
+                    }
+    
+                    $rubroProducto =  $sentencia->RUBRO;
+                    $precioProducto = $sentencia->PRECIOventa;
+                    $producto = $nombreProducto . " " . $litrosProducto;   
+                    $imagen = "<img src='productos/image-individual/$imagenProducto'>";
+
+    
+                    if($sentencia) {
+                    $sqlInsertarComprasBarras = "INSERT INTO COMPRAS (NOMBRE, TOTAL, RUBRO, IMAGEN) VALUES ('" . $producto . "','" . $precioProducto . "','" . $rubroProducto . "','" . $imagenProducto . "')";
+                    $resulset = $base->prepare($sqlInsertarComprasBarras);
+                    $resulset->execute();
+                    }else{
+                        echo "<h3 style='color: red;'>NO SE ENCONTRO EL PRODUCTO</h3>";
+                    }
+
+                
+            }
+
+     }
+
+
+                
+            
+        ?>
    
                     <?php 
                         $sql = "SELECT * FROM compras";
@@ -215,17 +253,52 @@
                 ?>
                 
                     <?php 
-                        $sql = "SELECT NOMBRE, TOTAL FROM compras";
+                        $sql = "SELECT * FROM compras";
                         $r = $base->prepare($sql);
                         $r->execute();
+                        $row = $r->fetch(PDO::FETCH_ASSOC);
+
+                        if(isset($row["NOMBRE"]) && isset($row["FECHA"]) && isset($row["TOTAL"]) && isset($row["RUBRO"])){ 
+                            $name2 = $row["NOMBRE"];
+                            $fecha = $row["FECHA"];
+                            $total = $row["TOTAL"];
+                            $rubro = $row["RUBRO"];
+                        }
                     ?>
 
-                    <td id="td-button"><a href="../../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
-                    & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
-                        echo "<p>" . $nombres->NOMBRE . "</p>";
-                    } ?>"><button name="bot-delete">calculadora</button></a></td>
+                    <td id="td-button"><a href="../../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name2 ?> & fecha=<?php echo $fecha ?> & rubro=<?php echo $rubro ?>
+                    & anom=<?php echo $name2 ?>"><button name="bot-delete">calculadora</button></a></td>
                 </tr>  
+                   
+        <?php  
+                if(isset($_GET["busqueda"])){
+                $search = $_GET["search"];
+
+                $sql = "SELECT * FROM barcode_products WHERE NOMBRE LIKE '%$search%'";
+                $result = $base->prepare($sql);
+                $result->execute();
+
+
+            while($registro=$result->fetch(PDO::FETCH_OBJ)){
+
+                if($registro->IMAGEN != ""){
+
+                    
+                    echo "<div class='cuadro-individual-productos'>"; 
+            
+                    echo "<a href='../../WEB/compras/insertar_compra.php?ID=$registro->ID & nproducto=$registro->NOMBRE & total=$registro->PRECIOventa & img=$registro->IMAGEN & nom=cambiar_vista' class='cuadro-producto'><img id='imagen-productos' src='../../WEB/productos/image-individual/" . $registro->IMAGEN . "'/></a>";
+            
+                    echo "</div>";
+
+
                         
+                    }
+                    
+               
+                }
+            }
+        ?>
+
         </table>
          
         </div>
