@@ -241,6 +241,10 @@
                     ?>         
                     <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
+                    <?php
+                     //solo para pasar por url 
+                        $rubro = $row->RUBRO;
+                     ?>
                         <td><?php $fecha = $row->FECHA; echo $fecha; ?></td>
                         <td><b><?php $name = $row->NOMBRE; echo strtoupper($name); ?></b></td>                       
                         <td>$ 0</td>
@@ -264,61 +268,67 @@
                     
                 
                     
-                        $sql = "SELECT * FROM compras";
-                        $r = $base->prepare($sql);
-                        $r->execute();
-
-                        $nombresArray;
                         
+
+                        
+                    //name
+                    $sql = "SELECT * FROM compras";
+                    $r = $base->prepare($sql);
+                    $r->execute();
+                        while($reg = $r->fetchAll(PDO::FETCH_COLUMN,2)) {
+                            $nombresArray = $reg;
+                        }
+                    //precio
+                    $sql = "SELECT * FROM compras";
+                    $re = $base->prepare($sql);
+                    $re->execute();
+                        while($reg = $re->fetchAll(PDO::FETCH_COLUMN,3)) {
+                            $preciosArray = $reg;
+                        }
                     
-                    while($reg = $r->fetchAll(PDO::FETCH_COLUMN,2)) {
-
-                        $nombresArray = $reg;
-
-                    }
-
-
-                    ?>
-                    <form method="post" action="prueba_ventas.php">
-                    <?php for($i=0;$i<=count($nombresArray);$i++) : ?>
- 
-                    <input type="hidden" name="nombre1" value="<?php if(isset($nombresArray[0])){echo $nombresArray[0];} ?>">
-                    <input type="hidden" name="precio1" value="<?php //echo $preciosArray[$contador] ?>">
-
-
+                    //rubro
+                    $sql = "SELECT * FROM compras";
+                    $res = $base->prepare($sql);
+                    $res->execute();
+                        while($reg = $res->fetchAll(PDO::FETCH_COLUMN,4)) {
+                            $rubrosArray = $reg;
+                        }
                     ?>
 
-                    
-                    <form method="post" action="prueba_ventas.php">
-                    <?php for($i=1;$i<=count($nombresArray);$i++) : ?>
+
+            <form method="post" action="prueba_ventas.php">
+                    <?php
+                        if(isset($nombresArray)) :
+                            for($i=1;$i<=count($nombresArray);$i++) : 
+                        
+                     ?>
                     <?php 
                         $contador = $i;
                         $contadorValueOfInput = $i-1;
-
                         $nombreHtml = "nombre$contador";
                         $precioHtml = "precio$contador";
-                        echo $nombreHtml;
-                        
+                        $rubroHtml = "rubro$contador";
                     ?>
-                    <!-- inputs para pasar el $_post de nombre, precio y rubro -->
-                    <!-- estan dentro de un bucle para repetirse las veces que sea necesaria (registros) -->
-                    <input type="hidden" name="<?php echo $nombreHtml ?>" value="<?php if(isset($nombresArray[$contadorValueOfInput])){echo $nombresArray[$contadorValueOfInput];} ?>">
-                    <input type="hidden" name="<?php echo $precioHtml ?>" value="<?php //echo $preciosArray[$contador] ?>">
+<!-- inputs para pasar el $_post de nombre, precio y rubro -->
+<!-- estan dentro de un bucle para repetirse las veces que sea necesaria (registros) -->
+                <!-- inputs nombre -->
+                <input type="hidden" name="<?php echo $nombreHtml ?>" value="<?php if(isset($nombresArray[$contadorValueOfInput])){echo $nombresArray[$contadorValueOfInput];} ?>">
+                <input type="hidden" name="<?php echo $precioHtml ?>" value="<?php if(isset($preciosArray[$contadorValueOfInput])){echo $preciosArray[$contadorValueOfInput];} ?>">
+                <input type="hidden" name="<?php echo $rubroHtml ?>" value="<?php if(isset($rubrosArray[$contadorValueOfInput])){echo $rubrosArray[$contadorValueOfInput];} ?>">
+                
+                    <?php 
+                        $contador++; 
+                        $contadorValueOfInput++; 
+                        endfor;
+                        endif;
+                    ?>
+                <a href="prueba_ventas.php"><button>Insertar compra (avanzado)</button></a>
+            </form>
 
-                    <?php $contador++; $contadorValueOfInput++; endfor;?>
-
-                    <input type="hidden" name="nombre8" value="<?php if(isset($nombresArray[7])){echo $nombresArray[7];} ?>">
-                    <input type="hidden" name="precio8" value="<?php //echo $preciosArray[$contador] ?>">
-                    <!--<input type="hidden" name="" value="">-->
-                    <?php $i++; endfor; ?>
-                    <a href="prueba_ventas.php"><button>ee</button></a>
-                    </form>
 
 
-                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name ?> & fecha=<?php echo $fecha ?>
-                    & anom=<?php while($nombres = $r->fetch(PDO::FETCH_OBJ)){
-                        echo "<p>" . $nombres->NOMBRE . "</p>";
-                    } ?>"><button name="bot-delete">calculadora</button></a></td>
+                    <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php if(isset($name)){echo $name;} ?>
+                    & rubro=<?php if(isset($rubro)){echo $rubro;} ?>"><button name="bot-delete">calculadora</button></a></td>
 
                 </tr>  
                 

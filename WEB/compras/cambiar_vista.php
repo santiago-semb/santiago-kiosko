@@ -222,7 +222,10 @@
                     ?>         
                     <?php while($row = $resultad->fetch(PDO::FETCH_OBJ)) : ?>
                 <tr>
-
+                    <?php
+                        $name2 = $row->NOMBRE;
+                        $rubro = $row->RUBRO;   
+                    ?>
                         <td>$ <?php $total = $row->TOTAL; echo $total ?></td>
                         <td><img class="img-producto" src="../productos/image-individual/<?php $img = $row->IMAGEN; echo $img; ?>"></td>
                                    
@@ -259,15 +262,13 @@
                         $row = $r->fetch(PDO::FETCH_ASSOC);
 
                         if(isset($row["NOMBRE"]) && isset($row["FECHA"]) && isset($row["TOTAL"]) && isset($row["RUBRO"])){ 
-                            $name2 = $row["NOMBRE"];
                             $fecha = $row["FECHA"];
                             $total = $row["TOTAL"];
-                            $rubro = $row["RUBRO"];
                         }
                     ?>
 
-                    <td id="td-button"><a href="../../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php echo $name2 ?> & fecha=<?php echo $fecha ?> & rubro=<?php echo $rubro ?>
-                    & anom=<?php echo $name2 ?>"><button name="bot-delete">calculadora</button></a></td>
+                <td id="td-button"><a href="../backend/calculadora.php?precio=<?php echo $totaltotal ?> & nom=<?php if(isset($name)){echo $name;} ?>
+                    & rubro=<?php if(isset($rubro)){echo $rubro;} ?>"><button name="bot-delete">calculadora</button></a></td>
                 </tr>  
                    
         <?php  

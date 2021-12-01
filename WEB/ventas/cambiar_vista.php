@@ -98,6 +98,7 @@
             margin: 0px auto;
             width: 90%;
             border: 1px solid black;
+            margin-bottom: 25px;
         }
 
         .tr-cambiar-vista-ventas {
@@ -186,19 +187,17 @@
             $empezar_desde=ceil(($paguina-1)*$tamano_paguinas);
             $result=$sentencia->fetchAll(PDO::FETCH_OBJ);
         //paginacion   
-    
-    ?>
 
-    <?php
         //para recorrer los registros con limit (para la paginacion)
         $sql_limite=$base->prepare("SELECT * FROM ventas ORDER BY ID DESC LIMIT ?,?");
         $sql_limite->bindParam(1, $empezar_desde, PDO::PARAM_INT);
         $sql_limite->bindParam(2, $tamano_paguinas, PDO::PARAM_INT);
         $sql_limite->execute();
         $resultado=$sql_limite->fetchAll(PDO::FETCH_OBJ);
+
     ?>
 
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] . "?pag=" ?>">
         <h6>buscar por rubro</h6>
         <div>
             <select name="rubro-busqueda">
@@ -253,9 +252,18 @@
             <td class='td-cambiar-vista-ventas'><?php $rubro = $row->RUBRO; echo $rubro;?></td>
             <td class='td-cambiar-vista-ventas'><?php $total = $row->TOTAL; echo $total;?></td>
         </tr>
-        <?php endwhile; 
-    
-    endif;?>
+        <?php endwhile; ?>
+
+        <?php 
+            $query = "SELECT SUM(TOTAL) as ventasTotalesRd FROM VENTAS WHERE RUBRO='$rubroBusqueda'";
+            $res = $base->prepare($query);
+            $res->execute();
+            $sentencia = $res->fetch(PDO::FETCH_OBJ);
+            $total_rubro_detallado = $sentencia->ventasTotalesRd;
+        ?>
+        <h3 style="margin: 0px auto;text-align: center; border: 2px solid black; width: 20%; margin-bottom: 5px;"><b>TOTAL: </b><b style="color: green;"><?php echo $total_rubro_detallado ?></b></h3>
+
+    <?php endif; ?>
  
     </table>
 
@@ -283,10 +291,10 @@
             <td class="td-cambiar-vista-ventas"><?php echo $rows->TOTAL ?></td>
         </tr>
         <?php endforeach; ?>
-    </table>
-<?php  endif; ?>
 
-<nav>
+    </table>
+
+    <nav>
     <div class="paginacion">
         <ul class="pagination">
             <li class="li-pag">
@@ -298,7 +306,10 @@
             </li>
         </ul>
     </div>
-</nav>
+    </nav>
+<?php  endif; ?>
+
+
 
 
 <!--<footer>Las ventas estan recibiendo datos de la BBDD a traves de una consulta SQL que recorre toda la tabla y trae estos registros (ventas)</footer>

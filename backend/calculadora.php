@@ -122,7 +122,6 @@ if(isset($_POST["boton-enviar"])) {
     $vuelto = $pagaCon - $precioVenta;
 
     $nombre= $_GET["nom"];
-    $fecha=$_GET["fecha"];
     $rubro=$_GET["rubro"];
     
 }else{
