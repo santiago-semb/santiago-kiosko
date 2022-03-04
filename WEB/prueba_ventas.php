@@ -2,83 +2,58 @@
 
 require("../backend/conexion/conexion.php");
     $base = Conectar::conexion();
-    $name1 = $_POST["nombre1"];
-    $name2 = $_POST["nombre2"];
-    $name3 = $_POST["nombre3"];
-    $name4 = $_POST["nombre4"];
-    $name5 = $_POST["nombre5"];
-    $name6 = $_POST["nombre6"];
-    $name7 = $_POST["nombre7"];
-    $name8 = $_POST["nombre8"];
 
-    $price1 = $_POST["price1"];
-    $price2 = $_POST["price2"];
-    $price3 = $_POST["price3"];
-    $price4 = $_POST["price4"];
-    $price1 = $_POST["price5"];
-    $price2 = $_POST["price6"];
-    $price3 = $_POST["price7"];
-    $price4 = $_POST["price8"];
 
    for($i=1;$i<=8;$i++){
 
         $contador = $i;
         $valueName;
-        switch($contador){
-            case 1:
-                $valueName = "nombre1";
-                break;
-            case 2:
-                $valueName = "nombre2";
-                break;
-            case 3:
-                $valueName = "nombre3";
-                break;
-            case 4:
-                $valueName = "nombre4";
-                break;
-            case 5:
-                $valueName = "nombre5";
-                break;
-            case 6:
-                $valueName = "nombre6";
-                break;
-            case 7:
-                $valueName = "nombre7";
-                break;
-            case 8:
-                $valueName = "nombre8";
-                break;
+
+    //nombre
+        switch($contador) {
+            case $contador:
+                $valueName = "nombre$contador";
+            break;    
         }
         $sqlName;
-        if($valueName == "nombre1") {
-            $sqlName = $name1;
+        switch($valueName) {
+            case "nombre$contador":
+                $sqlName = $_POST["nombre$contador"];
+            break;
+            
         }
-        if($valueName == "nombre2") {
-            $sqlName = $name2;
+
+    //precio 
+        switch($contador) {
+            case $contador:
+                $valueName = "precio$contador";
+            break;    
         }
-        if($valueName == "nombre3") {
-            $sqlName = $name3;
+        $sqlPrice;
+        switch($valueName) {
+            case "precio$contador":
+                $sqlPrice = $_POST["precio$contador"];
+            break;
+            
         }
-        if($valueName == "nombre4") {
-            $sqlName = $name4;
+    //rubro
+
+        switch($contador) {
+            case $contador:
+                $valueName = "rubro$contador";
+            break;    
         }
-        if($valueName == "nombre5") {
-            $sqlName = $name5;
-        }
-        if($valueName == "nombre6") {
-            $sqlName = $name6;
-        }
-        if($valueName == "nombre7") {
-            $sqlName = $name7;
-        }
-        if($valueName == "nombre8") {
-            $sqlName = $name8;
+        $sqlName;
+        switch($valueName) {
+            case "rubro$contador":
+                $sqlRubro = $_POST["rubro$contador"];
+            break;
+            
         }
 
         if(!$sqlName == null || !$sqlName == ""){
         
-        $sql = "INSERT INTO ventas (NOMBRE, RUBRO, TOTAL) VALUES ('" . $sqlName . "','" . $rubro . "','" . $price . "')";
+        $sql = "INSERT INTO ventas (NOMBRE, RUBRO, TOTAL) VALUES ('" . $sqlName . "','" . $sqlRubro . "','" . $sqlPrice . "')";
         $k = $base->prepare($sql);
         $k->execute();
 
@@ -89,7 +64,10 @@ require("../backend/conexion/conexion.php");
 
     }
 
-    
+        $sqlDeleteCompras = "DELETE FROM compras";
+        $resSqlDeleteCompras = $base->prepare($sqlDeleteCompras);
+        $resSqlDeleteCompras->execute();
+
     header("Location:compras.php");
 
 ?>

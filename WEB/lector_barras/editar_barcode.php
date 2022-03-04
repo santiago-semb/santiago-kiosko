@@ -164,9 +164,6 @@
         ?>
         </div>
 
-<<<<<<< HEAD
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET["id"] ?>" class="form-barras">
-=======
         <script>
             $(document).ready(function(){
                 $('#barcode').keydown(function(e){
@@ -180,8 +177,7 @@
             });
         </script>
 
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="form-barras">
->>>>>>> 67d42383c8020311d2003e2d119fa085abf40064
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $_GET['id'] ?>" class="form-barras">
         <div id="div-mayor-barras">
             <div id="div-form-barras">
             <label>barra</label>
